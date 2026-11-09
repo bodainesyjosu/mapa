@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa y alojamiento · Boda de Inés y Josu</title>
+<meta name="description" content="Mapa interactivo y alojamientos para la boda de Inés y Josu en Pamplona, 26 de junio de 2027.">
+<meta name="theme-color" content="#F3EBDD">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F3EBDD' stroke='%238E4A2D' stroke-width='3'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='%233B2F25' font-family='Georgia'%3EI%26amp;J%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allison&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Josefin+Sans:wght@300;400&family=Lora:wght@400;500;600&family=Noto+Sans:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/estilos.css">
+<style>
+  /* Solo en esta versión reducida */
+  .cabecera{background:var(--crema);text-align:center;padding:calc(var(--barra) + 36px) 20px 40px}
+  .cabecera .nombres{font-size:clamp(56px,10vw,88px)}
+  .cabecera .fecha{font-size:clamp(20px,3.4vw,26px)}
+  .seccion-mapa{padding-top:56px}
+  footer{padding:48px 20px 36px}
+  footer .nombres{font-size:clamp(44px,8vw,64px)}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<header class="barra">
+  <a class="monograma" href="#inicio" aria-label="Inicio">Inés y Josu</a>
+  <nav aria-label="Secciones">
+    <button class="boton-menu" type="button" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menú
+    </button>
+    <ul class="enlaces" id="menu">
+      <li><a href="#mapa">Mapa</a></li>
+      <li><a href="#alojamiento">Dónde dormir</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="cabecera" id="inicio">
+    <p class="nombres aparece">Inés y Josu</p>
+    <p class="fecha aparece">26 de junio de 2027</p>
+    <p class="lugar aparece">Pamplona</p>
+  </div>
+
+  <!-- ================= Mapa ================= -->
+  <section class="seccion-mapa" id="mapa">
+    <div class="contenedor" style="max-width:1100px">
+      <p class="etiqueta aparece">Ubicaciones</p>
+      <h2 class="aparece">El <em>mapa</em></h2>
+      <p class="entradilla aparece">La ceremonia, el banquete y los alojamientos. Toca un punto para ver su ficha.</p>
+      <div class="leyenda aparece" aria-label="Leyenda">
+        <span><i class="grande" style="background:var(--terra)"></i>Ceremonia</span>
+        <span><i class="grande" style="background:var(--oliva)"></i>Banquete</span>
+        <span><i style="background:var(--terra)"></i>Hoteles en el centro</span>
+        <span><i style="background:var(--oliva)"></i>Cerca del banquete</span>
+        <span><i style="background:var(--pizarra)"></i>Mejor en coche</span>
+      </div>
+      <div class="mapa" role="region" aria-label="Mapa de Pamplona con la ceremonia, el banquete y los hoteles">
+        <div id="mapa-lienzo"></div>
+        <p class="aviso">Cargando el mapa…</p>
+        <div class="cartel arriba"><svg viewBox="0 0 24 24"><path d="M19 19 5 5M5 13V5h8"/></svg><div><b>VITORIA-GASTEIZ · DONOSTIA</b><small>A-10 · A-15</small></div></div>
+        <div class="cartel izq"><svg viewBox="0 0 24 24"><path d="M21 12H3M10 5l-7 7 7 7"/></svg><div><b>LOGROÑO</b><small>A-12</small></div></div>
+        <div class="pila">
+          <div class="cartel"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 14l7 7 7-7"/></svg><div><b>ZARAGOZA · MADRID</b><small>AP-15 · A-15</small></div></div>
+          <div class="cartel"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 11v8h-8"/></svg><div><b>HUESCA · LLEIDA · BARCELONA</b><small>A-15 · A-21</small></div></div>
+        </div>
+        <div class="escala" aria-hidden="true"><div class="marcas"><span>0</span><span></span><span></span></div><div class="barra-escala"></div></div>
+        <div class="atrib">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · © <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> · <a href="https://openfreemap.org/" target="_blank" rel="noopener">OpenFreeMap</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Dónde dormir ================= -->
+  <section class="seccion-alojamiento alojamiento" id="alojamiento">
+    <div class="contenedor">
+      <p class="etiqueta aparece">Alojamiento</p>
+      <h2 class="aparece">Dónde <em>dormir</em></h2>
+      <p class="entradilla aparece">Algunas opciones, ordenadas por zona. Las distancias y los tiempos son hasta la Ciudadela, donde será la ceremonia.</p>
+      <p class="nota aparece">Precio orientativo por noche, de € (más económico) a <span style="white-space:nowrap">€€€€€</span>. Tiempos en villavesa (autobús urbano) orientativos, en horario de día.</p>
+      <div id="bloques" class="aparece"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="nombres aparece">Inés y Josu</p>
+  <p class="fecha aparece" style="font-size:20px">26 · 06 · 2027 · Pamplona</p>
+</footer>
+
+<!-- js/web.js es el de la web principal y espera la cuenta atrás: aquí va oculta -->
+<div id="cuenta" hidden><b data-u="d"></b><b data-u="h"></b><b data-u="m"></b><b data-u="s"></b></div>
+
+<script src="js/datos.js"></script>
+<script src="js/web.js"></script>
+<script src="js/mapa.js"></script>
+</body>
+</html>

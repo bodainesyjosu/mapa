@@ -17,7 +17,8 @@
   .cabecera{background:var(--crema);text-align:center;padding:calc(var(--barra) + 36px) 20px 40px}
   .cabecera .nombres{font-size:clamp(56px,10vw,88px)}
   .cabecera .fecha{font-size:clamp(20px,3.4vw,26px)}
-  .seccion-mapa{padding-top:56px}
+  .seccion-alojamiento{padding-bottom:40px}
+  .seccion-mapa{padding-top:56px;padding-bottom:96px}
   footer{padding:48px 20px 36px}
   footer .nombres{font-size:clamp(44px,8vw,64px)}
 </style>
@@ -32,8 +33,8 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menú
     </button>
     <ul class="enlaces" id="menu">
-      <li><a href="#mapa">Mapa</a></li>
       <li><a href="#alojamiento">Dónde dormir</a></li>
+      <li><a href="#mapa">Mapa</a></li>
     </ul>
   </nav>
 </header>
@@ -44,6 +45,17 @@
     <p class="fecha aparece">26 de junio de 2027</p>
     <p class="lugar aparece">Pamplona</p>
   </div>
+
+  <!-- ================= Dónde dormir ================= -->
+  <section class="seccion-alojamiento alojamiento" id="alojamiento">
+    <div class="contenedor">
+      <p class="etiqueta aparece">Alojamiento</p>
+      <h2 class="aparece">Dónde <em>dormir</em></h2>
+      <p class="entradilla aparece">Algunas opciones, ordenadas por zona. Las distancias y los tiempos son hasta la Ciudadela, donde será la ceremonia.</p>
+      <p class="nota aparece">Precio orientativo por noche, de € (más económico) a <span style="white-space:nowrap">€€€€€</span>. Tiempos en villavesa (autobús urbano) orientativos, en horario de día.</p>
+      <div id="bloques" class="aparece"></div>
+    </div>
+  </section>
 
   <!-- ================= Mapa ================= -->
   <section class="seccion-mapa" id="mapa">
@@ -73,16 +85,6 @@
     </div>
   </section>
 
-  <!-- ================= Dónde dormir ================= -->
-  <section class="seccion-alojamiento alojamiento" id="alojamiento">
-    <div class="contenedor">
-      <p class="etiqueta aparece">Alojamiento</p>
-      <h2 class="aparece">Dónde <em>dormir</em></h2>
-      <p class="entradilla aparece">Algunas opciones, ordenadas por zona. Las distancias y los tiempos son hasta la Ciudadela, donde será la ceremonia.</p>
-      <p class="nota aparece">Precio orientativo por noche, de € (más económico) a <span style="white-space:nowrap">€€€€€</span>. Tiempos en villavesa (autobús urbano) orientativos, en horario de día.</p>
-      <div id="bloques" class="aparece"></div>
-    </div>
-  </section>
 </main>
 
 <footer>

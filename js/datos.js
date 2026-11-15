@@ -38,6 +38,15 @@ const ALOJAMIENTOS = [
   ]},
 ];
 
+// Lugares conocidos, solo como referencia para situarse (coordenadas de OpenStreetMap)
+const REFERENCIAS = [
+  { n: 'Plaza del Castillo', c: [-1.64276, 42.81681] },
+  { n: 'Ayuntamiento', c: [-1.64419, 42.81843] },
+  { n: 'Catedral', c: [-1.64123, 42.81940] },
+  { n: 'Plaza de toros', c: [-1.63900, 42.81591] },
+  { n: 'Estación de autobuses', c: [-1.64592, 42.81131] },
+];
+
 // Rótulos de zona en el mapa
 const ZONAS = [
   { n: 'CASCO ANTIGUO', c: [-1.6525, 42.8213] },

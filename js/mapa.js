@@ -10,6 +10,7 @@
   const COLOR_GRUPO = { terra: C.terra, oliva: C.olive, pizarra: C.slate };
   const BOUNDS = [[-1.6990, 42.7805], [-1.6140, 42.8400]];
   const LOGRONO_LAT = 42.7951;      // altura por la que sale la A-12
+  const REF_ZOOM = 13.3;            // a partir de este zoom se ven los lugares de referencia
   const CARTELES_ZOOM_EXTRA = 0.8;  // al acercar más que esto sobre el encuadre inicial, se ocultan los carteles
 
   const caja = document.querySelector('.mapa');
@@ -24,6 +25,7 @@
     HOTEL[h.id] = Object.assign({ grupo: g.color }, h);
     feats.push({ type:'Feature', properties:{ id:h.id, name:h.mapa, kind:'h', g:g.color }, geometry:{ type:'Point', coordinates:h.c } });
   }
+  for (const r of REFERENCIAS) feats.push({ type:'Feature', properties:{ name:r.n, kind:'ref' }, geometry:{ type:'Point', coordinates:r.c } });
   for (const z of ZONAS) feats.push({ type:'Feature', properties:{ name:z.n, kind:'area' }, geometry:{ type:'Point', coordinates:z.c } });
   const pts = { type:'FeatureCollection', features: feats };
 
@@ -49,6 +51,10 @@
       { id:'river-label', type:'symbol', source:'omt', 'source-layer':'waterway', filter:['all',['==',['get','class'],'river'],['in','Arga',['coalesce',['get','name'],'']]], layout:{ 'symbol-placement':'line', 'text-field':'Río Arga', 'text-font':F.i, 'text-size':zs(13,18), 'text-letter-spacing':0.25, 'symbol-spacing':350 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
       { id:'road-label', type:'symbol', source:'omt', 'source-layer':'transportation_name', minzoom:12, filter:['in',['get','class'],['literal',['motorway','trunk','primary']]], layout:{ 'symbol-placement':'line', 'text-field':['coalesce',['get','name:es'],['get','name'],['get','ref']], 'text-font':F.r, 'text-size':12, 'symbol-spacing':600 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
       { id:'barrios', type:'symbol', source:'omt', 'source-layer':'place', filter:['in',['get','class'],['literal',['suburb','quarter','neighbourhood']]], layout:{ 'text-field':['upcase',['coalesce',['get','name:es'],['get','name']]], 'text-font':F.r, 'text-size':zs(10,14), 'text-letter-spacing':0.18, 'text-max-width':8, 'text-padding':12 }, paint:{ 'text-color':C.ink2, 'text-opacity':0.85, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
+      // Lugares de referencia: punto hueco y nombre en cursiva, discretos; solo al acercar el centro.
+      // Van antes que los hoteles: si no caben, ceden su sitio a los nombres de hotel.
+      { id:'refs', type:'circle', source:'pts', minzoom:REF_ZOOM, filter:['==',['get','kind'],'ref'], paint:{ 'circle-radius':4, 'circle-color':C.light, 'circle-stroke-color':C.ink2, 'circle-stroke-width':1.6 } },
+      { id:'ref-labels', type:'symbol', source:'pts', minzoom:REF_ZOOM, filter:['==',['get','kind'],'ref'], layout:{ 'text-field':['get','name'], 'text-font':F.i, 'text-size':13.5, 'text-variable-anchor':['top','bottom','left','right'], 'text-radial-offset':0.7, 'text-justify':'auto', 'text-max-width':9 }, paint:{ 'text-color':'#4A4740', 'text-halo-color':C.bg, 'text-halo-width':2 } },
       { id:'hotels', type:'circle', source:'pts', filter:['==',['get','kind'],'h'], paint:{ 'circle-radius':zs(4.5,5.5), 'circle-stroke-color':C.light, 'circle-stroke-width':2, 'circle-color':['match',['get','g'],'terra',C.terra,'oliva',C.olive,C.slate] } },
       { id:'areas', type:'symbol', source:'pts', filter:['==',['get','kind'],'area'], layout:{ 'text-field':['get','name'], 'text-font':F.b, 'text-size':zs(11,16), 'text-letter-spacing':0.2, 'text-allow-overlap':true }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':2 } },
       { id:'main', type:'circle', source:'pts', filter:['in',['get','kind'],['literal',['cer','ban']]], paint:{ 'circle-radius':zs(9,13), 'circle-color':['match',['get','kind'],'cer',C.terra,C.olive], 'circle-stroke-color':C.light, 'circle-stroke-width':3 } },

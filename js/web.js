@@ -9,8 +9,8 @@
   const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
 
   /* ---------- Dónde dormir: tarjetas desde datos.js ---------- */
-  // Dentro de cada zona, del más económico (€) al más caro (€€€€€); a igual precio, el orden de datos.js
-  const porPrecio = hs => hs.slice().sort((a, b) => a.p.length - b.p.length);
+  // Dentro de cada zona, del más caro (€€€€€) al más económico (€); a igual precio, el orden de datos.js
+  const porPrecio = hs => hs.slice().sort((a, b) => b.p.length - a.p.length);
   const maps = q =>'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
   $('#bloques').innerHTML = ALOJAMIENTOS.map(g => `
     <details class="${g.color}" id="bloque-${g.id}">

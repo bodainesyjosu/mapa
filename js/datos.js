@@ -52,10 +52,23 @@ const REFERENCIAS = [
   { n: 'Plaza de toros', c: [-1.63900, 42.81591], q: 'Plaza de Toros de Pamplona' },
   { n: 'Monumento a los Fueros', c: [-1.64363, 42.81573], q: 'Monumento a los Fueros de Navarra, Paseo de Sarasate, Pamplona' },
   { n: 'Monumento al Encierro', c: [-1.64134, 42.81477], q: 'Monumento al Encierro, Avenida de Roncesvalles, Pamplona' },
+  // d = texto corto que sale en el globo, bajo el nombre
+  { n: 'Corrales de Santo Domingo', d: 'Donde empieza el encierro', c: [-1.64604, 42.82027], q: 'Corrales de Santo Domingo, Pamplona' },
+  { n: 'Baluarte del Redín', c: [-1.64037, 42.82120], q: 'Baluarte del Redín, Pamplona' },
+  { n: 'Fuente de la Navarrería', d: 'Zona para tomar algo', c: [-1.64291, 42.81932], q: 'Plaza de la Navarrería, Pamplona' },
   { n: 'Estación de autobuses', c: [-1.64592, 42.81131], q: 'Estación de Autobuses de Pamplona' },
   { n: 'Estación de tren', c: [-1.66132, 42.82502], q: 'Estación de tren de Pamplona' },
   // Queda al sur del encuadre inicial: se ve al bajar por el mapa
   { n: 'Aeropuerto', c: [-1.63932, 42.76722], q: 'Aeropuerto de Pamplona' },
+];
+
+// Calles para ir de pintxos: en el mapa, una franja suave sobre la calle con su nombre a lo largo.
+// linea = trazado de la calle (de OpenStreetMap), [longitud, latitud] punto a punto.
+const CALLES = [
+  { n: 'Calle Estafeta', d: 'Zona de pintxos', q: 'Calle Estafeta, Pamplona',
+    linea: [[-1.64111,42.81598],[-1.64115,42.81603],[-1.64133,42.81628],[-1.64150,42.81654],[-1.64210,42.81740],[-1.64299,42.81845],[-1.64301,42.81849]] },
+  { n: 'Calle San Nicolás', d: 'Zona de pintxos', q: 'Calle San Nicolás, Pamplona',
+    linea: [[-1.64341,42.81676],[-1.64356,42.81673],[-1.64383,42.81665],[-1.64387,42.81663],[-1.64499,42.81612],[-1.64552,42.81586]] },
 ];
 
 // Rótulos de zona en el mapa

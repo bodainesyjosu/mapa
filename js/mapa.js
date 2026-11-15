@@ -13,7 +13,8 @@
   const REF_ZOOM = 11.5;            // a partir de este zoom se ven los lugares de referencia (más bajo = se ven desde más lejos);
                                     // en el centro, además, solo salen cuando hay sitio sin tapar los nombres de los hoteles
   const ESP_ZOOM = 12.5;            // los corazones (puntos especiales) solo se ven al acercar; con el mapa entero, no
-  const REF_COLOR = '#4A4740';      // gris de los lugares de referencia (punto y nombre)
+  const REF_COLOR = '#4A4740';
+  const CALLE_ZOOM = 13;            // las calles de pintxos se ven a partir de este zoom (su nombre, al acercar más)      // gris de los lugares de referencia (punto y nombre)
   const CARTELES_ZOOM_EXTRA = 0.8;  // al acercar más que esto sobre el encuadre inicial, se ocultan los carteles
 
   const caja = document.querySelector('.mapa');
@@ -30,13 +31,18 @@
     HOTEL[h.id] = Object.assign({ grupo: g.color }, h);
     feats.push({ type:'Feature', properties:{ id:h.id, name:h.mapa, kind:'h', g:g.color }, geometry:{ type:'Point', coordinates:h.c } });
   }
-  const REF = {};   // lugares de referencia por id ('ref0', 'ref1'…), para abrir su globo al tocarlos
+  const REF = {};   // lugares de referencia ('ref0'…) y calles de pintxos ('calle0'…) por id, para abrir su globo al tocarlos
   REFERENCIAS.forEach((r, i) => {
     REF['ref' + i] = r;
     feats.push({ type:'Feature', properties:{ id:'ref' + i, name:r.n, kind:'ref' }, geometry:{ type:'Point', coordinates:r.c } });
   });
   for (const z of ZONAS) feats.push({ type:'Feature', properties:{ name:z.n, kind:'area' }, geometry:{ type:'Point', coordinates:z.c } });
   const pts = { type:'FeatureCollection', features: feats };
+  // Calles de pintxos: líneas aparte. Su globo se abre en el punto central de la calle.
+  const calles = { type:'FeatureCollection', features: CALLES.map((k, i) => {
+    REF['calle' + i] = Object.assign({ c: k.linea[Math.floor(k.linea.length / 2)] }, k);
+    return { type:'Feature', properties:{ id:'calle' + i, name:k.n }, geometry:{ type:'LineString', coordinates:k.linea } };
+  }) };
 
   // ---------- Estilo "papel viejo" ----------
   const F = { r:['Noto Sans Regular'], b:['Noto Sans Bold'], i:['Noto Sans Italic'] };
@@ -44,7 +50,7 @@
   const style = {
     version: 8,
     glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
-    sources: { omt: { type:'vector', url:'https://tiles.openfreemap.org/planet' }, pts: { type:'geojson', data: pts } },
+    sources: { omt: { type:'vector', url:'https://tiles.openfreemap.org/planet' }, pts: { type:'geojson', data: pts }, calles: { type:'geojson', data: calles } },
     layers: [
       { id:'bg', type:'background', paint:{ 'background-color':C.bg } },
       { id:'green', type:'fill', source:'omt', 'source-layer':'landcover', filter:['in',['get','class'],['literal',['grass','wood','farmland']]], paint:{ 'fill-color':C.light, 'fill-opacity':0.9 } },
@@ -56,10 +62,17 @@
       { id:'rail', type:'line', source:'omt', 'source-layer':'transportation', filter:['==',['get','class'],'rail'], paint:{ 'line-color':C.line, 'line-width':1, 'line-dasharray':[3,2] } },
       { id:'road-minor', type:'line', source:'omt', 'source-layer':'transportation', filter:['in',['get','class'],['literal',['minor','service','tertiary','path','pedestrian']]], layout:{ 'line-cap':'round', 'line-join':'round' }, paint:{ 'line-color':C.line, 'line-opacity':0.8, 'line-width':['interpolate',['linear'],['zoom'],13,0.4,16,1.6] } },
       { id:'road-major-case', type:'line', source:'omt', 'source-layer':'transportation', filter:['in',['get','class'],['literal',['motorway','trunk','primary','secondary']]], layout:{ 'line-cap':'round', 'line-join':'round' }, paint:{ 'line-color':C.line, 'line-width':['interpolate',['linear'],['zoom'],12,['match',['get','class'],['motorway','trunk'],5,'primary',3.5,2.5],16,9] } },
+      // Calles de pintxos: franja roja suave sobre la calle (debajo de los puntos y los nombres)
+      { id:'calles-franja', type:'line', source:'calles', minzoom:CALLE_ZOOM, layout:{ 'line-cap':'round', 'line-join':'round' },
+        paint:{ 'line-color':C.terra, 'line-opacity':0.3, 'line-width':['interpolate',['linear'],['zoom'],CALLE_ZOOM,5,16,14,17,20] } },
       { id:'road-major', type:'line', source:'omt', 'source-layer':'transportation', filter:['in',['get','class'],['literal',['motorway','trunk','primary','secondary']]], layout:{ 'line-cap':'round', 'line-join':'round' }, paint:{ 'line-color':C.light, 'line-width':['interpolate',['linear'],['zoom'],12,['match',['get','class'],['motorway','trunk'],2.6,'primary',1.8,1.2],16,6] } },
       { id:'river-label', type:'symbol', source:'omt', 'source-layer':'waterway', filter:['all',['==',['get','class'],'river'],['in','Arga',['coalesce',['get','name'],'']]], layout:{ 'symbol-placement':'line', 'text-field':'Río Arga', 'text-font':F.i, 'text-size':zs(13,18), 'text-letter-spacing':0.25, 'symbol-spacing':350 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
       { id:'road-label', type:'symbol', source:'omt', 'source-layer':'transportation_name', minzoom:12, filter:['in',['get','class'],['literal',['motorway','trunk','primary']]], layout:{ 'symbol-placement':'line', 'text-field':['coalesce',['get','name:es'],['get','name'],['get','ref']], 'text-font':F.r, 'text-size':12, 'symbol-spacing':600 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
       { id:'barrios', type:'symbol', source:'omt', 'source-layer':'place', filter:['in',['get','class'],['literal',['suburb','quarter','neighbourhood']]], layout:{ 'text-field':['upcase',['coalesce',['get','name:es'],['get','name']]], 'text-font':F.r, 'text-size':zs(10,14), 'text-letter-spacing':0.18, 'text-max-width':8, 'text-padding':12 }, paint:{ 'text-color':C.ink2, 'text-opacity':0.85, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
+      // Nombre de las calles de pintxos, escrito a lo largo de la calle; solo al acercar y si cabe sin tapar nada
+      { id:'calles-nombre', type:'symbol', source:'calles', minzoom:CALLE_ZOOM + 1.5,
+        layout:{ 'symbol-placement':'line-center', 'text-field':['get','name'], 'text-font':F.i, 'text-size':12.5, 'text-letter-spacing':0.04, 'text-offset':[0,-1] },
+        paint:{ 'text-color':'#8A3A0F', 'text-halo-color':C.bg, 'text-halo-width':2 } },
       // Lugares de referencia: punto gris del mismo color que su nombre (en cursiva); solo al acercar el centro.
       // Punto y nombre son un mismo símbolo: si el nombre no cabe, desaparecen los dos (nunca queda un punto sin nombre).
       // Van antes que los hoteles: si no caben, ceden su sitio a los nombres de hotel.
@@ -143,7 +156,7 @@
   function globo(id){
     const lugar = LUGARES[id], hotel = HOTEL[id], ref = REF[id];
     const titulo = lugar ? lugar.nombre : hotel ? hotel.n : ref.n;
-    const detalle = lugar ? lugar.detalle : hotel ? hotel.d : '';
+    const detalle = lugar ? lugar.detalle : hotel ? hotel.d : (ref.d || '');
     const c = (lugar || hotel || ref).c;
     const div = document.createElement('div');
     const b = document.createElement('b'); b.textContent = titulo; div.appendChild(b);
@@ -202,10 +215,10 @@
     baseZoom = map.getZoom(); lastW = caja.clientWidth;
 
     map.on('click', e => {
-      const f = map.queryRenderedFeatures(e.point, { layers:['especial-icono','especial','hotels','main','refs'] })[0];
+      const f = map.queryRenderedFeatures(e.point, { layers:['especial-icono','especial','hotels','main','refs','calles-franja'] })[0];
       if (f) globo(f.properties.id);
     });
-    for (const l of ['hotels','main','especial','especial-icono','refs']) {
+    for (const l of ['hotels','main','especial','especial-icono','refs','calles-franja']) {
       map.on('mouseenter', l, () => map.getCanvas().style.cursor = 'pointer');
       map.on('mouseleave', l, () => map.getCanvas().style.cursor = '');
     }

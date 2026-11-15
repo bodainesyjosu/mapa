@@ -49,7 +49,8 @@ const REFERENCIAS = [
   { n: 'Plaza del Castillo', c: [-1.64276, 42.81681], q: 'Plaza del Castillo, Pamplona' },
   { n: 'Ayuntamiento', c: [-1.64419, 42.81843], q: 'Ayuntamiento de Pamplona' },
   { n: 'Catedral', c: [-1.64123, 42.81940], q: 'Catedral de Santa María la Real, Pamplona' },
-  { n: 'Plaza de toros', c: [-1.63900, 42.81591], q: 'Plaza de Toros de Pamplona' },
+  // Punto en la puerta del callejón, por donde entran los toros al final del encierro
+  { n: 'Plaza de toros', c: [-1.64009, 42.81580], q: 'Plaza de Toros de Pamplona' },
   { n: 'Monumento a los Fueros', c: [-1.64363, 42.81573], q: 'Monumento a los Fueros de Navarra, Paseo de Sarasate, Pamplona' },
   { n: 'Monumento al Encierro', c: [-1.64134, 42.81477], q: 'Monumento al Encierro, Avenida de Roncesvalles, Pamplona' },
   // d = texto corto que sale en el globo, bajo el nombre

@@ -5,9 +5,10 @@
    Coordenadas: [longitud, latitud].
    ========================================================== */
 
+// q = lo que se busca en Google Maps con el botón del globo; sin q, se usan las coordenadas exactas.
 const LUGARES = {
-  ceremonia: { nombre: 'Ceremonia · Ciudadela', detalle: '18:30', c: [-1.64932, 42.81213] },
-  banquete:  { nombre: 'Banquete · Asador Erreleku', detalle: '20:00 · cóctel, cena y fiesta', c: [-1.64569, 42.78839] },
+  ceremonia: { nombre: 'Ceremonia · Ciudadela', detalle: '18:30', c: [-1.64932, 42.81213], q: 'Ciudadela de Pamplona' },
+  banquete:  { nombre: 'Banquete · Asador Erreleku', detalle: '20:00 · cóctel, cena y fiesta', c: [-1.64569, 42.78839], q: 'Asador Erreleku, Cordovilla' },
   // Donde nos dimos el primer beso (en el mapa sale con un corazón gris, sin más explicación)
   // Puntos especiales (especial: true): en el mapa salen con un corazón gris
   taconera:  { nombre: 'Un punto especial en la Taconera', detalle: 'Jardines de la Taconera', c: [-1.652197, 42.818696], especial: true },
@@ -44,12 +45,16 @@ const ALOJAMIENTOS = [
 
 // Lugares conocidos, solo como referencia para situarse (coordenadas de OpenStreetMap)
 const REFERENCIAS = [
-  { n: 'Plaza del Castillo', c: [-1.64276, 42.81681] },
-  { n: 'Ayuntamiento', c: [-1.64419, 42.81843] },
-  { n: 'Catedral', c: [-1.64123, 42.81940] },
-  { n: 'Plaza de toros', c: [-1.63900, 42.81591] },
-  { n: 'Estación de autobuses', c: [-1.64592, 42.81131] },
-  { n: 'Estación de tren', c: [-1.66132, 42.82502] },
+  { n: 'Plaza del Castillo', c: [-1.64276, 42.81681], q: 'Plaza del Castillo, Pamplona' },
+  { n: 'Ayuntamiento', c: [-1.64419, 42.81843], q: 'Ayuntamiento de Pamplona' },
+  { n: 'Catedral', c: [-1.64123, 42.81940], q: 'Catedral de Santa María la Real, Pamplona' },
+  { n: 'Plaza de toros', c: [-1.63900, 42.81591], q: 'Plaza de Toros de Pamplona' },
+  { n: 'Monumento a los Fueros', c: [-1.64363, 42.81573], q: 'Monumento a los Fueros de Navarra, Paseo de Sarasate, Pamplona' },
+  { n: 'Monumento al Encierro', c: [-1.64134, 42.81477], q: 'Monumento al Encierro, Avenida de Roncesvalles, Pamplona' },
+  { n: 'Estación de autobuses', c: [-1.64592, 42.81131], q: 'Estación de Autobuses de Pamplona' },
+  { n: 'Estación de tren', c: [-1.66132, 42.82502], q: 'Estación de tren de Pamplona' },
+  // Queda al sur del encuadre inicial: se ve al bajar por el mapa
+  { n: 'Aeropuerto', c: [-1.63932, 42.76722], q: 'Aeropuerto de Pamplona' },
 ];
 
 // Rótulos de zona en el mapa

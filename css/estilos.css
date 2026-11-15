@@ -239,6 +239,10 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
 .mapa .maplibregl-popup-content small{display:block;color:var(--tinta-suave);font-size:14px}
 .mapa .maplibregl-popup-content button:not(.maplibregl-popup-close-button){margin-top:6px;background:var(--terra);color:var(--papel-claro);border:0;border-radius:999px;
       padding:5px 12px;font:400 14px var(--texto);cursor:pointer}
+/* «Abrir en Google Maps» (lugares que no son hoteles): mismo botón que «Ver ficha» */
+.mapa .maplibregl-popup-content a.ir-maps{display:inline-block;margin-top:6px;background:var(--terra);color:var(--papel-claro);border-radius:999px;
+      padding:5px 12px;font:400 14px var(--texto);text-decoration:none}
+.mapa .maplibregl-popup-content a.ir-maps:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
 /* La X de cerrar va en su esquina, sin pisar el título */
 .mapa .maplibregl-popup-close-button{top:4px;right:4px;width:26px;height:26px;border-radius:50%;font:20px/1 system-ui,sans-serif;color:var(--tinta-suave);background:none}
 .mapa .maplibregl-popup-close-button:hover{background:var(--papel)}

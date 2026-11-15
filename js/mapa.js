@@ -30,7 +30,11 @@
     HOTEL[h.id] = Object.assign({ grupo: g.color }, h);
     feats.push({ type:'Feature', properties:{ id:h.id, name:h.mapa, kind:'h', g:g.color }, geometry:{ type:'Point', coordinates:h.c } });
   }
-  for (const r of REFERENCIAS) feats.push({ type:'Feature', properties:{ name:r.n, kind:'ref' }, geometry:{ type:'Point', coordinates:r.c } });
+  const REF = {};   // lugares de referencia por id ('ref0', 'ref1'…), para abrir su globo al tocarlos
+  REFERENCIAS.forEach((r, i) => {
+    REF['ref' + i] = r;
+    feats.push({ type:'Feature', properties:{ id:'ref' + i, name:r.n, kind:'ref' }, geometry:{ type:'Point', coordinates:r.c } });
+  });
   for (const z of ZONAS) feats.push({ type:'Feature', properties:{ name:z.n, kind:'area' }, geometry:{ type:'Point', coordinates:z.c } });
   const pts = { type:'FeatureCollection', features: feats };
 
@@ -132,19 +136,31 @@
   function nombresHotel(){ if (map.getLayer('hotel-labels')) map.setLayerZoomRange('hotel-labels', estrecho() ? 12.6 : 0, 24); }
   function refrescar(){ escala(); cartelLogrono(); carteles(); }
 
+  // Enlace de Google Maps: por nombre si hay q (sale la ficha del sitio); si no, a las coordenadas exactas
+  const enlaceMaps = p => 'https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent(p.q || (p.c[1] + ',' + p.c[0]));
+
   function globo(id){
-    const lugar = LUGARES[id], hotel = HOTEL[id];
+    const lugar = LUGARES[id], hotel = HOTEL[id], ref = REF[id];
+    const titulo = lugar ? lugar.nombre : hotel ? hotel.n : ref.n;
+    const detalle = lugar ? lugar.detalle : hotel ? hotel.d : '';
+    const c = (lugar || hotel || ref).c;
     const div = document.createElement('div');
-    const b = document.createElement('b'); b.textContent = lugar ? lugar.nombre : hotel.n; div.appendChild(b);
-    const s = document.createElement('small'); s.textContent = lugar ? lugar.detalle : hotel.d; div.appendChild(s);
+    const b = document.createElement('b'); b.textContent = titulo; div.appendChild(b);
+    if (detalle) { const s = document.createElement('small'); s.textContent = detalle; div.appendChild(s); }
     if (hotel) {
+      // Los hoteles llevan a su ficha, que ya tiene su propio enlace a Google Maps
       const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = 'Ver ficha';
       btn.addEventListener('click', () => window.Web && Web.irAFicha(id));
       div.appendChild(btn);
+    } else {
+      const a = document.createElement('a'); a.className = 'ir-maps'; a.textContent = 'Abrir en Google Maps';
+      a.href = enlaceMaps(lugar || ref); a.target = '_blank'; a.rel = 'noopener';
+      div.appendChild(a);
     }
     if (popup) popup.remove();
     popup = new maplibregl.Popup({ closeButton:true, offset:14, maxWidth:'260px' })
-      .setLngLat(lugar ? lugar.c : hotel.c).setDOMContent(div).addTo(map);
+      .setLngLat(c).setDOMContent(div).addTo(map);
   }
 
   function crear(){
@@ -186,10 +202,10 @@
     baseZoom = map.getZoom(); lastW = caja.clientWidth;
 
     map.on('click', e => {
-      const f = map.queryRenderedFeatures(e.point, { layers:['especial-icono','especial','hotels','main'] })[0];
+      const f = map.queryRenderedFeatures(e.point, { layers:['especial-icono','especial','hotels','main','refs'] })[0];
       if (f) globo(f.properties.id);
     });
-    for (const l of ['hotels','main','especial','especial-icono']) {
+    for (const l of ['hotels','main','especial','especial-icono','refs']) {
       map.on('mouseenter', l, () => map.getCanvas().style.cursor = 'pointer');
       map.on('mouseleave', l, () => map.getCanvas().style.cursor = '');
     }

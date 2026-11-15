@@ -11,7 +11,9 @@
   /* ---------- Dónde dormir: tarjetas desde datos.js ---------- */
   // Dentro de cada zona, del más caro (€€€€€) al más económico (€); a igual precio, el orden de datos.js
   const porPrecio = hs => hs.slice().sort((a, b) => b.p.length - a.p.length);
-  const maps = q =>'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+  // «villavesa» lleva asterisco: remite a la nota «* La villavesa es el autobús urbano.»
+  const villavesa = s => s.replace(/villavesa/gi, '$&*');
+  const maps = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
   $('#bloques').innerHTML = ALOJAMIENTOS.map(g => `
     <details class="${g.color}" id="bloque-${g.id}">
       <summary>
@@ -24,7 +26,7 @@
           <div class="cabeza"><h4>${esc(h.n)}</h4><span class="precio" title="Precio orientativo">${esc(h.p)}</span></div>
           <p class="meta">${esc(h.m)}</p>
           <p class="dato">${esc(h.d)}</p>
-          ${h.t ? `<p class="dato">${esc(h.t)}</p>` : ''}
+          ${h.t ? `<p class="dato">${villavesa(esc(h.t))}</p>` : ''}
           <div class="botones">
             <a class="lleno" href="${esc(h.u)}" target="_blank" rel="noopener">Ver alojamiento</a>
             <a class="vacio" href="${esc(maps(h.q))}" target="_blank" rel="noopener">Google Maps</a>

@@ -15,8 +15,8 @@
 <link rel="stylesheet" href="css/estilos.css?v=3">
 <style>
   /* Solo en esta versión reducida */
-  .cabecera{background:var(--crema);text-align:center;padding:calc(var(--barra) + 20px) 20px 48px}
-  .seccion-alojamiento{padding-bottom:40px}
+  /* La página empieza directamente en «Dónde dormir», justo bajo la barra */
+  .seccion-alojamiento{padding-top:calc(var(--barra) + 40px);padding-bottom:40px}
   .seccion-mapa{padding-top:56px;padding-bottom:96px}
   footer{padding:40px 20px 40px}
   footer .fecha{font-size:clamp(18px,2vw,24px)}
@@ -42,12 +42,8 @@
   </nav>
 </header>
 
-<main>
-  <div class="cabecera" id="inicio">
-    <p class="nombres aparece">Inés y Josu</p>
-    <p class="fecha aparece">26 de junio de 2027</p>
-    <p class="lugar aparece">Pamplona</p>
-  </div>
+<main id="inicio">
+  <!-- Sin portada: los nombres y la fecha ya están en la web de Canva, desde donde se llega aquí -->
 
   <!-- ================= Dónde dormir ================= -->
   <section class="seccion-alojamiento alojamiento" id="alojamiento">

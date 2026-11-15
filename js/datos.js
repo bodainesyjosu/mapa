@@ -53,6 +53,7 @@ const REFERENCIAS = [
   { n: 'Monumento a los Fueros', c: [-1.64363, 42.81573], q: 'Monumento a los Fueros de Navarra, Paseo de Sarasate, Pamplona' },
   { n: 'Monumento al Encierro', c: [-1.64134, 42.81477], q: 'Monumento al Encierro, Avenida de Roncesvalles, Pamplona' },
   // d = texto corto que sale en el globo, bajo el nombre
+  { n: 'Reloj de San Fermín', d: 'La cuenta atrás de Kukuxumusu', c: [-1.6412725, 42.8161351], maps: 'https://maps.google.com/?cid=1127148139565604444' },
   { n: 'Corrales de Santo Domingo', d: 'Donde empieza el encierro', c: [-1.64604, 42.82027], q: 'Corrales de Santo Domingo, Pamplona' },
   // maps = enlace directo a su ficha de Google Maps (buscando por nombre salía también el Mesón del Caballo Blanco)
   { n: 'Rincón del Caballo Blanco', c: [-1.6413152, 42.8210107], maps: 'https://maps.google.com/?cid=13520882529087779968' },

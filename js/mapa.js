@@ -12,6 +12,7 @@
   const LOGRONO_LAT = 42.7951;      // altura por la que sale la A-12
   const REF_ZOOM = 11.5;            // a partir de este zoom se ven los lugares de referencia (más bajo = se ven desde más lejos);
                                     // en el centro, además, solo salen cuando hay sitio sin tapar los nombres de los hoteles
+  const ESP_ZOOM = 12.5;            // los corazones (puntos especiales) solo se ven al acercar; con el mapa entero, no
   const REF_COLOR = '#4A4740';      // gris de los lugares de referencia (punto y nombre)
   const CARTELES_ZOOM_EXTRA = 0.8;  // al acercar más que esto sobre el encuadre inicial, se ocultan los carteles
 
@@ -22,6 +23,8 @@
   const feats = [];
   feats.push({ type:'Feature', properties:{ id:'ceremonia', name:LUGARES.ceremonia.nombre, kind:'cer' }, geometry:{ type:'Point', coordinates:LUGARES.ceremonia.c } });
   feats.push({ type:'Feature', properties:{ id:'banquete', name:LUGARES.banquete.nombre, kind:'ban' }, geometry:{ type:'Point', coordinates:LUGARES.banquete.c } });
+  for (const [id, l] of Object.entries(LUGARES)) if (l.especial)
+    feats.push({ type:'Feature', properties:{ id, name:l.nombre, kind:'esp' }, geometry:{ type:'Point', coordinates:l.c } });
   const HOTEL = {};
   for (const g of ALOJAMIENTOS) for (const h of g.hoteles) {
     HOTEL[h.id] = Object.assign({ grupo: g.color }, h);
@@ -61,10 +64,20 @@
                  'text-field':['get','name'], 'text-font':F.i, 'text-size':['interpolate',['linear'],['zoom'],REF_ZOOM,11,14.5,13.5], 'text-padding':0, 'icon-padding':0, 'text-variable-anchor':['top','bottom','left','right','top-left','top-right','bottom-left','bottom-right'],
                  'text-radial-offset':0.8, 'text-justify':'auto', 'text-max-width':9 },
         paint:{ 'text-color':REF_COLOR, 'text-halo-color':C.bg, 'text-halo-width':2 } },
+      // Puntos especiales (corazones), parte 1: su nombre (cursiva gris). Va aquí abajo para que, si no cabe,
+      // ceda el sitio a los nombres de hoteles y zonas. El corazón va al final de la lista (siempre encima).
+      { id:'especial', type:'symbol', source:'pts', minzoom:ESP_ZOOM, filter:['==',['get','kind'],'esp'],
+        layout:{ 'text-field':['get','name'], 'text-font':F.i, 'text-size':13, 'text-max-width':11,
+                 'text-variable-anchor':['left','right','top','bottom','top-left','top-right','bottom-left','bottom-right'], 'text-radial-offset':0.9, 'text-justify':'auto' },
+        paint:{ 'text-color':REF_COLOR, 'text-halo-color':C.bg, 'text-halo-width':2 } },
       { id:'hotels', type:'circle', source:'pts', filter:['==',['get','kind'],'h'], paint:{ 'circle-radius':zs(4.5,5.5), 'circle-stroke-color':C.light, 'circle-stroke-width':2, 'circle-color':['match',['get','g'],'terra',C.terra,'oliva',C.olive,C.slate] } },
-      { id:'areas', type:'symbol', source:'pts', filter:['==',['get','kind'],'area'], layout:{ 'text-field':['get','name'], 'text-font':F.b, 'text-size':zs(11,16), 'text-letter-spacing':0.2, 'text-allow-overlap':true }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':2 } },
       { id:'main', type:'circle', source:'pts', filter:['in',['get','kind'],['literal',['cer','ban']]], paint:{ 'circle-radius':zs(9,13), 'circle-color':['match',['get','kind'],'cer',C.terra,C.olive], 'circle-stroke-color':C.light, 'circle-stroke-width':3 } },
-      { id:'hotel-labels', type:'symbol', source:'pts', filter:['==',['get','kind'],'h'], layout:{ 'text-field':['get','name'], 'text-font':F.r, 'text-size':zs(10.5,13), 'text-variable-anchor':['left','right','top','bottom','top-left','bottom-left','top-right','bottom-right'], 'text-radial-offset':0.6, 'text-justify':'auto', 'text-padding':1 }, paint:{ 'text-color':C.ink, 'text-halo-color':C.bg, 'text-halo-width':2 } },
+      // Zonas: ceden ante los nombres de hotel (si chocan, la zona se oculta hasta acercar el mapa)
+      { id:'areas', type:'symbol', source:'pts', filter:['==',['get','kind'],'area'], layout:{ 'text-field':['get','name'], 'text-font':F.b, 'text-size':zs(11,16), 'text-letter-spacing':0.2, 'text-padding':4 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':2 } },
+      { id:'hotel-labels', type:'symbol', source:'pts', filter:['==',['get','kind'],'h'], layout:{ 'text-field':['get','name'], 'text-font':F.r, 'text-size':zs(10.5,13), 'text-variable-anchor':['left','right','top','bottom','top-left','bottom-left','top-right','bottom-right'], 'text-radial-offset':0.6, 'text-justify':'auto', 'text-padding':3 }, paint:{ 'text-color':C.ink, 'text-halo-color':C.bg, 'text-halo-width':2 } },
+      // Puntos especiales, parte 2: el corazón. Siempre se dibuja, encima de todo, y los demás nombres se apartan de él
+      { id:'especial-icono', type:'symbol', source:'pts', minzoom:ESP_ZOOM, filter:['==',['get','kind'],'esp'],
+        layout:{ 'icon-image':'corazon', 'icon-size':0.68, 'icon-allow-overlap':true, 'icon-padding':2 } },
       { id:'main-labels', type:'symbol', source:'pts', filter:['in',['get','kind'],['literal',['cer','ban']]], layout:{ 'text-field':['get','name'], 'text-font':F.b, 'text-size':zs(14,20), 'text-max-width':30, 'text-anchor':['match',['get','kind'],'cer','top','right'], 'text-radial-offset':1.3, 'text-allow-overlap':true }, paint:{ 'text-color':['match',['get','kind'],'cer',C.terra,C.olive], 'text-halo-color':C.bg, 'text-halo-width':2.5 } },
     ]
   };
@@ -149,6 +162,19 @@
     map.touchZoomRotate.disableRotation();
     // Punto gris de los lugares de referencia (se dibuja aquí porque el estilo no trae imágenes)
     map.on('styleimagemissing', e => {
+      if (e.id === 'corazon' && !map.hasImage('corazon')) {
+        // Corazón gris (como los lugares de referencia) con borde claro, a doble resolución para que se vea nítido
+        const px = 2, t = 22 * px, cv = document.createElement('canvas'); cv.width = cv.height = t;
+        const g = cv.getContext('2d'); g.scale(px, px);
+        const corazon = () => { g.beginPath(); g.moveTo(11, 18.5);
+          g.bezierCurveTo(4, 13.5, 2.5, 10, 2.5, 7.3); g.bezierCurveTo(2.5, 4.6, 4.6, 2.8, 7, 2.8);
+          g.bezierCurveTo(8.8, 2.8, 10.2, 3.9, 11, 5.4); g.bezierCurveTo(11.8, 3.9, 13.2, 2.8, 15, 2.8);
+          g.bezierCurveTo(17.4, 2.8, 19.5, 4.6, 19.5, 7.3); g.bezierCurveTo(19.5, 10, 18, 13.5, 11, 18.5); g.closePath(); };
+        corazon(); g.lineWidth = 3; g.lineJoin = 'round'; g.strokeStyle = C.light; g.stroke();
+        corazon(); g.fillStyle = REF_COLOR; g.fill();
+        map.addImage('corazon', g.getImageData(0, 0, t, t), { pixelRatio: px });
+        return;
+      }
       if (e.id !== 'punto-ref' || map.hasImage('punto-ref')) return;
       const px = 2, t = 13 * px, cv = document.createElement('canvas'); cv.width = cv.height = t;
       const g = cv.getContext('2d');
@@ -160,10 +186,10 @@
     baseZoom = map.getZoom(); lastW = caja.clientWidth;
 
     map.on('click', e => {
-      const f = map.queryRenderedFeatures(e.point, { layers:['hotels','main'] })[0];
+      const f = map.queryRenderedFeatures(e.point, { layers:['especial-icono','especial','hotels','main'] })[0];
       if (f) globo(f.properties.id);
     });
-    for (const l of ['hotels','main']) {
+    for (const l of ['hotels','main','especial','especial-icono']) {
       map.on('mouseenter', l, () => map.getCanvas().style.cursor = 'pointer');
       map.on('mouseleave', l, () => map.getCanvas().style.cursor = '');
     }

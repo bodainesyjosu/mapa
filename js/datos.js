@@ -8,6 +8,10 @@
 const LUGARES = {
   ceremonia: { nombre: 'Ceremonia · Ciudadela', detalle: '18:30', c: [-1.64932, 42.81213] },
   banquete:  { nombre: 'Banquete · Asador Erreleku', detalle: '20:00 · cóctel, cena y fiesta', c: [-1.64569, 42.78839] },
+  // Donde nos dimos el primer beso (en el mapa sale con un corazón gris, sin más explicación)
+  // Puntos especiales (especial: true): en el mapa salen con un corazón gris
+  taconera:  { nombre: 'Un punto especial en la Taconera', detalle: 'Jardines de la Taconera', c: [-1.652197, 42.818696], especial: true },
+  txantrea:  { nombre: 'Un punto especial en la Txantrea', detalle: 'Txantrea', c: [-1.632017, 42.831985], especial: true },
 };
 
 // Bloques de alojamiento. Precio: nivel orientativo (€ a €€€€€).

@@ -62,7 +62,7 @@ const REFERENCIAS = [
   { n: 'Aeropuerto', c: [-1.63932, 42.76722], q: 'Aeropuerto de Pamplona' },
 ];
 
-// Calles para ir de pintxos: en el mapa, una franja suave sobre la calle con su nombre a lo largo.
+// Calles para ir de pintxos: en el mapa, una franja gris suave sobre la calle con su nombre a lo largo.
 // linea = trazado de la calle (de OpenStreetMap), [longitud, latitud] punto a punto.
 const CALLES = [
   { n: 'Calle Estafeta', d: 'Zona de pintxos', q: 'Calle Estafeta, Pamplona',

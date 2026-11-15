@@ -62,9 +62,9 @@
       { id:'rail', type:'line', source:'omt', 'source-layer':'transportation', filter:['==',['get','class'],'rail'], paint:{ 'line-color':C.line, 'line-width':1, 'line-dasharray':[3,2] } },
       { id:'road-minor', type:'line', source:'omt', 'source-layer':'transportation', filter:['in',['get','class'],['literal',['minor','service','tertiary','path','pedestrian']]], layout:{ 'line-cap':'round', 'line-join':'round' }, paint:{ 'line-color':C.line, 'line-opacity':0.8, 'line-width':['interpolate',['linear'],['zoom'],13,0.4,16,1.6] } },
       { id:'road-major-case', type:'line', source:'omt', 'source-layer':'transportation', filter:['in',['get','class'],['literal',['motorway','trunk','primary','secondary']]], layout:{ 'line-cap':'round', 'line-join':'round' }, paint:{ 'line-color':C.line, 'line-width':['interpolate',['linear'],['zoom'],12,['match',['get','class'],['motorway','trunk'],5,'primary',3.5,2.5],16,9] } },
-      // Calles de pintxos: franja roja suave sobre la calle (debajo de los puntos y los nombres)
+      // Calles de pintxos: franja gris suave (el gris de los lugares de referencia) sobre la calle, debajo de puntos y nombres
       { id:'calles-franja', type:'line', source:'calles', minzoom:CALLE_ZOOM, layout:{ 'line-cap':'round', 'line-join':'round' },
-        paint:{ 'line-color':C.terra, 'line-opacity':0.3, 'line-width':['interpolate',['linear'],['zoom'],CALLE_ZOOM,5,16,14,17,20] } },
+        paint:{ 'line-color':REF_COLOR, 'line-opacity':0.28, 'line-width':['interpolate',['linear'],['zoom'],CALLE_ZOOM,3.5,16,10,17,14] } },
       { id:'road-major', type:'line', source:'omt', 'source-layer':'transportation', filter:['in',['get','class'],['literal',['motorway','trunk','primary','secondary']]], layout:{ 'line-cap':'round', 'line-join':'round' }, paint:{ 'line-color':C.light, 'line-width':['interpolate',['linear'],['zoom'],12,['match',['get','class'],['motorway','trunk'],2.6,'primary',1.8,1.2],16,6] } },
       { id:'river-label', type:'symbol', source:'omt', 'source-layer':'waterway', filter:['all',['==',['get','class'],'river'],['in','Arga',['coalesce',['get','name'],'']]], layout:{ 'symbol-placement':'line', 'text-field':'Río Arga', 'text-font':F.i, 'text-size':zs(13,18), 'text-letter-spacing':0.25, 'symbol-spacing':350 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
       { id:'road-label', type:'symbol', source:'omt', 'source-layer':'transportation_name', minzoom:12, filter:['in',['get','class'],['literal',['motorway','trunk','primary']]], layout:{ 'symbol-placement':'line', 'text-field':['coalesce',['get','name:es'],['get','name'],['get','ref']], 'text-font':F.r, 'text-size':12, 'symbol-spacing':600 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
@@ -72,7 +72,7 @@
       // Nombre de las calles de pintxos, escrito a lo largo de la calle; solo al acercar y si cabe sin tapar nada
       { id:'calles-nombre', type:'symbol', source:'calles', minzoom:CALLE_ZOOM + 1.5,
         layout:{ 'symbol-placement':'line-center', 'text-field':['get','name'], 'text-font':F.i, 'text-size':12.5, 'text-letter-spacing':0.04, 'text-offset':[0,-1] },
-        paint:{ 'text-color':'#8A3A0F', 'text-halo-color':C.bg, 'text-halo-width':2 } },
+        paint:{ 'text-color':REF_COLOR, 'text-halo-color':C.bg, 'text-halo-width':2 } },
       // Lugares de referencia: punto gris del mismo color que su nombre (en cursiva); solo al acercar el centro.
       // Punto y nombre son un mismo símbolo: si el nombre no cabe, desaparecen los dos (nunca queda un punto sin nombre).
       // Van antes que los hoteles: si no caben, ceden su sitio a los nombres de hotel.

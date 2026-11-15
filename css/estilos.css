@@ -1,24 +1,64 @@
 /* ==========================================================
    Boda Inés y Josu · estilos
-   Paleta "papel viejo" + tipografías del save the date
+   Paleta y tipografías de la web de Canva (canva.link/afzvbtj9rw4qike)
    ========================================================== */
+/* Fuentes propias: los ficheros van en /fuentes */
+@font-face{font-family:"Brittany";src:url("../fuentes/BrittanySignature.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"Yellow Peas";src:url("../fuentes/YellowPeas-Regular.otf") format("opentype");font-display:swap}
 :root{
-  --papel:#F3EBDD; --papel-claro:#FBF6EC; --crema:#FDFAF2; --linea:#CDBFA5;
-  --tinta:#3B2F25; --tinta-suave:#6B5A48;
-  --terra:#8E4A2D; --terra-suave:#EBD3C4;
-  --oliva:#55603F; --oliva-suave:#DCE0CC;
-  --pizarra:#4C6670; --pizarra-suave:#D3DEDF;
-  --cinta:rgba(214,201,174,.82);
-  --titulos:"Cormorant Garamond", Georgia, serif;
-  --texto:Lora, Georgia, serif;
-  --manuscrita:"Allison", "Cormorant Garamond", cursive;
-  --fina:"Josefin Sans", "Lora", sans-serif;
+  /* Fondos: normal #E6E4DD, claro #FFFDF8 */
+  --papel:#E6E4DD; --papel-claro:#FFFDF8; --crema:#FFFDF8; --linea:#CFCBC0;
+  --tinta:#2E2B27; --tinta-suave:#67635B;
+  /* Rojo #AF4510, verde #467A43, azul #023F5D (+ versiones suaves al 18 %) */
+  --terra:#AF4510; --terra-suave:#F1DCCE;
+  --oliva:#467A43; --oliva-suave:#DEE5D7;
+  --pizarra:#023F5D; --pizarra-suave:#D2DBDC;
+  --cinta:rgba(205,196,176,.82);
+  /* Fuente 1 (especial): Brittany · Fuente 2 (general): Yellow Peas */
+  --manuscrita:"Brittany", "Allison", cursive;
+  --general:"Yellow Peas", "Josefin Sans", system-ui, sans-serif;
+  --titulos:var(--general);
+  --texto:var(--general);
+  --fina:var(--general);
   --barra:58px;
 }
+/* ---------- Tildes dibujadas (ver js/acentos.js) ----------
+   --A/--D: ascendente y descendente de la fuente (en em), para saber dónde cae la línea base.
+   --x/--cap: altura de minúscula y de mayúscula. --g: grosor del trazo. --dx: corrección por la inclinación. */
+.ac-palabra{white-space:nowrap}
+.ac{position:relative;--sube:var(--x)}
+/* --ls: espaciado entre letras del texto (se resta para centrar la tilde sobre la letra) */
+.ac.alta{--sube:var(--cap)}
+.f-brit{--A:1.17em;--D:.89em;--x:.36em;--cap:1.02em;--g:.034em;--dx:.07em;--largo:.2em;--giro:58deg}
+.f-yp{--A:1em;--D:.21em;--x:.43em;--cap:.645em;--g:.05em;--dx:0em;--largo:.16em;--giro:45deg}
+.f-yp.alta{--largo:.12em}
+.ac::before{content:attr(data-b);display:inline-block;line-height:calc(var(--A) + var(--D))}
+.ac-real{position:absolute;left:0;top:0;color:transparent;overflow:hidden;width:100%;height:100%;user-select:text}
+.ac::after{content:"";position:absolute;pointer-events:none;background:currentColor}
+/* tilde aguda: trazo inclinado */
+.ac[data-m="agudo"]::after{width:var(--g);height:var(--largo);border-radius:var(--g);left:calc(50% - var(--ls,0em) / 2 + var(--dx));
+  top:calc(var(--A) - var(--sube) - var(--largo) - .03em);transform:translateX(-50%) rotate(var(--giro));transform-origin:50% 100%}
+/* en la «í» se recorta el punto de la «i» */
+.ac.sin-punto::before{clip-path:inset(calc(var(--A) - var(--x) + .02em) -1em -1em -1em)}
+.ac.sin-punto[data-m="agudo"]::after{top:calc(var(--A) - var(--x) - var(--largo) + .02em)}
+/* virgulilla de la ñ */
+.ac[data-m="virgulilla"]::after{width:.26em;height:.09em;left:calc(50% - var(--ls,0em) / 2 + var(--dx));transform:translateX(-50%);
+  top:calc(var(--A) - var(--sube) - .17em);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 9'%3E%3Cpath d='M2 7C4 2 8 1.5 12 4.5S20 7.5 24 2' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 9'%3E%3Cpath d='M2 7C4 2 8 1.5 12 4.5S20 7.5 24 2' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.f-brit[data-m="virgulilla"]::after{transform:translateX(-50%) rotate(-8deg)}
+/* diéresis */
+.ac[data-m="dieresis"]::after{width:.22em;height:.07em;left:calc(50% - var(--ls,0em) / 2 + var(--dx));transform:translateX(-50%);top:calc(var(--A) - var(--sube) - .15em);
+  background:radial-gradient(circle,currentColor 60%,transparent 64%) 0 0/.07em .07em repeat-x;background-color:transparent;
+  -webkit-mask:linear-gradient(90deg,#000 32%,transparent 32% 68%,#000 68%);mask:linear-gradient(90deg,#000 32%,transparent 32% 68%,#000 68%)}
+/* ¿ y ¡: la ? y la ! de la propia fuente, giradas */
+.ac[data-m="invertido"]::after{content:none}
+.ac[data-m="invertido"]::before{transform:rotate(180deg);transform-origin:50% calc(var(--A) - var(--cap) / 2)}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:var(--barra)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--texto);font-size:16px;line-height:1.6;
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--texto);font-size:18px;line-height:1.6;
      -webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{color:var(--terra)}
@@ -27,11 +67,12 @@ a{color:var(--terra)}
 /* ---------- Barra de navegación (estilo Canva: fina, arriba, con menú) ---------- */
 .barra{position:fixed;inset:0 0 auto 0;height:var(--barra);z-index:50;display:flex;align-items:center;
        justify-content:space-between;padding:0 20px;transition:background .3s,box-shadow .3s}
-.barra.con-fondo{background:rgba(251,246,236,.94);box-shadow:0 1px 0 var(--linea);
+.barra.con-fondo{background:rgba(255,253,248,.94);box-shadow:0 1px 0 var(--linea);
                  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.monograma{font-family:var(--manuscrita);font-size:34px;line-height:1;color:var(--tinta);text-decoration:none;padding-top:6px}
+/* 32px: la tinta de Brittany (1,65em) cabe entera en la barra de 58px */
+.monograma{font-family:var(--manuscrita);font-size:32px;line-height:1;color:var(--tinta);text-decoration:none;padding:4px 0 0}
 .enlaces{display:flex;gap:4px;list-style:none;margin:0;padding:0}
-.enlaces a{display:block;padding:8px 12px;border-radius:999px;font-family:var(--fina);font-size:13px;letter-spacing:2px;
+.enlaces a{display:block;padding:8px 12px;border-radius:999px;font-family:var(--fina);font-size:15px;letter-spacing:2px;
            text-transform:uppercase;text-decoration:none;color:var(--tinta-suave)}
 .enlaces a:hover{color:var(--tinta)}
 .enlaces a[aria-current="true"]{color:var(--terra);background:var(--terra-suave)}
@@ -39,10 +80,10 @@ a{color:var(--terra)}
             padding:7px 14px;font:13px var(--fina);letter-spacing:2px;text-transform:uppercase;color:var(--tinta);cursor:pointer}
 .boton-menu svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
 @media (max-width:860px){
-  .boton-menu{display:inline-flex;background:rgba(251,246,236,.9)}
+  .boton-menu{display:inline-flex;background:rgba(255,253,248,.9)}
   .enlaces{position:absolute;top:calc(var(--barra) - 4px);right:12px;flex-direction:column;gap:2px;min-width:210px;
            background:var(--papel-claro);border:1px solid var(--linea);border-radius:12px;padding:8px;
-           box-shadow:0 10px 30px rgba(59,47,37,.12);opacity:0;visibility:hidden;transform:translateY(-6px);
+           box-shadow:0 10px 30px rgba(46,43,39,.12);opacity:0;visibility:hidden;transform:translateY(-6px);
            transition:opacity .2s,transform .2s,visibility .2s}
   .enlaces.abierto{opacity:1;visibility:visible;transform:none}
   .enlaces a{padding:12px 14px;font-size:14px}
@@ -52,12 +93,13 @@ a{color:var(--terra)}
 section{padding:96px 20px}
 .contenedor{max-width:1000px;margin:0 auto}
 .estrecho{max-width:680px;margin:0 auto}
-.etiqueta{font-family:var(--fina);font-size:13px;letter-spacing:3.5px;text-transform:uppercase;color:var(--tinta-suave);
+.etiqueta{font-family:var(--fina);font-size:clamp(20px,3.4vw,46px);letter-spacing:.027em;line-height:1.15;text-transform:uppercase;color:var(--terra);
           text-align:center;margin:0 0 10px}
-h2{font-family:var(--titulos);font-weight:500;font-size:clamp(38px,6vw,56px);line-height:1.05;text-align:center;margin:0 0 18px}
-h2 em{font-family:var(--manuscrita);font-style:normal;font-weight:400;font-size:1.35em;color:var(--terra);
-      display:inline-block;transform:translateY(.08em)}
-.entradilla{text-align:center;color:var(--tinta-suave);max-width:620px;margin:0 auto 44px}
+/* Títulos como en Canva: todo en Brittany, en tinta */
+/* Brittany sube ~1em por encima de la línea base y baja ~.63em (1,65em de tinta): line-height 1.7 + un poco de relleno arriba para que no pise nada ni entre líneas */
+h2{font-family:var(--manuscrita);font-weight:400;font-size:clamp(52px,6.6vw,90px);line-height:1.7;--ls:.084em;letter-spacing:var(--ls);text-align:center;margin:0 0 16px;padding-top:.06em;color:var(--tinta)}
+h2 em{font-style:normal}
+.entradilla{text-align:center;color:var(--tinta-suave);font-size:clamp(19px,1.9vw,24px);line-height:1.45;max-width:720px;margin:0 auto 44px}
 .adorno{display:flex;justify-content:center;gap:8px;margin:0 0 22px}
 .adorno span{width:28px;height:4px;border-radius:2px}
 
@@ -70,13 +112,13 @@ h2 em{font-family:var(--manuscrita);font-style:normal;font-weight:400;font-size:
 .portada{min-height:100svh;background:var(--crema);display:flex;flex-direction:column;align-items:center;justify-content:center;
          padding:calc(var(--barra) + 24px) 20px 56px;text-align:center;position:relative}
 .foto-cinta{position:relative;width:min(380px,74vw,calc((100svh - 330px) * .844));min-width:200px;margin:0 auto 26px}
-.foto-cinta img{width:100%;height:auto;aspect-ratio:894/1059;object-fit:cover;box-shadow:0 14px 34px rgba(59,47,37,.14)}
-.cinta{position:absolute;width:34%;height:12%;background:var(--cinta);box-shadow:0 1px 2px rgba(59,47,37,.08)}
+.foto-cinta img{width:100%;height:auto;aspect-ratio:894/1059;object-fit:cover;box-shadow:0 14px 34px rgba(46,43,39,.14)}
+.cinta{position:absolute;width:34%;height:12%;background:var(--cinta);box-shadow:0 1px 2px rgba(46,43,39,.08)}
 .cinta.a{top:-3.5%;left:-9%;transform:rotate(-34deg)}
 .cinta.b{bottom:-3%;right:-9%;transform:rotate(-30deg)}
-.nombres{font-family:var(--manuscrita);font-weight:400;font-size:clamp(60px,12vw,104px);line-height:1;margin:0;letter-spacing:2px}
-.fecha{font-family:var(--fina);font-weight:300;font-size:clamp(22px,4vw,32px);letter-spacing:1px;margin:6px 0 0}
-.lugar{font-family:var(--fina);font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--tinta-suave);margin:14px 0 0}
+.nombres{font-family:var(--manuscrita);font-weight:400;font-size:clamp(50px,8.3vw,113px);line-height:1.7;margin:0;padding:.06em 0 0 .26em;--ls:.26em;letter-spacing:var(--ls)}
+.fecha{font-family:var(--fina);font-weight:400;font-size:clamp(22px,3.6vw,50px);letter-spacing:.027em;line-height:1.15;color:var(--terra);margin:.2em 0 0}
+.lugar{font-family:var(--fina);font-size:18px;letter-spacing:4px;text-transform:uppercase;color:var(--tinta-suave);margin:14px 0 0}
 .bajar{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:var(--tinta-suave);text-decoration:none;
        font:12px var(--fina);letter-spacing:3px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:4px}
 .bajar svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none;animation:flotar 2.2s ease-in-out infinite}
@@ -92,7 +134,7 @@ h2 em{font-family:var(--manuscrita);font-style:normal;font-weight:400;font-size:
 .cuenta span{font-family:var(--fina);font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--tinta-suave)}
 
 /* ---------- Huecos pendientes (fotos y textos que llegarán) ---------- */
-.pendiente{border:1.5px dashed var(--linea);border-radius:12px;background:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(205,191,165,.12) 12px 24px);
+.pendiente{border:1.5px dashed var(--linea);border-radius:12px;background:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(207,203,192,.12) 12px 24px);
            color:var(--tinta-suave);display:grid;place-items:center;text-align:center;padding:20px;font-size:14px}
 .pendiente svg{width:30px;height:30px;stroke:var(--linea);stroke-width:1.5;fill:none;margin:0 auto 6px}
 p.pendiente{display:block;text-align:center;margin:0 auto}
@@ -126,12 +168,12 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
 
 /* Botoncito "Ver en el mapa" */
 .ir-mapa{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:4px 0;cursor:pointer;
-         font:600 13px var(--texto);color:var(--acento,var(--terra));text-decoration:underline;text-underline-offset:3px}
+         font:400 15px var(--texto);color:var(--acento,var(--terra));text-decoration:underline;text-underline-offset:3px}
 .ir-mapa svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---------- Mapa ---------- */
 .seccion-mapa{padding-bottom:40px}
-.leyenda{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:-20px 0 24px;font-size:14px;color:var(--tinta-suave)}
+.leyenda{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:-20px 0 24px;font-size:16px;color:var(--tinta-suave)}
 .leyenda span{display:inline-flex;align-items:center;gap:8px}
 .leyenda i{width:11px;height:11px;border-radius:50%;border:2px solid var(--papel-claro);box-shadow:0 0 0 1px var(--linea)}
 .leyenda i.grande{width:15px;height:15px}
@@ -143,8 +185,8 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
 .mapa.listo .aviso{display:none}
 .mapa:not(.listo) .cartel,.mapa:not(.listo) .pila,.mapa:not(.listo) .escala{visibility:hidden}
 .mapa.error .atrib{display:none}
-.cartel{position:absolute;display:flex;align-items:center;gap:10px;background:rgba(251,246,236,.94);border:1px solid var(--linea);
-        border-radius:6px;padding:8px 12px;pointer-events:none;box-shadow:0 1px 3px rgba(59,47,37,.08);
+.cartel{position:absolute;display:flex;align-items:center;gap:10px;background:rgba(255,253,248,.94);border:1px solid var(--linea);
+        border-radius:6px;padding:8px 12px;pointer-events:none;box-shadow:0 1px 3px rgba(46,43,39,.08);
         font-family:"Noto Sans",sans-serif;transition:opacity .25s,visibility .25s}
 .cartel svg{flex:none;width:24px;height:24px;stroke:var(--tinta);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .cartel b{display:block;font-size:13px;letter-spacing:1.3px;line-height:1.25}
@@ -154,7 +196,7 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
 .pila{position:absolute;right:14px;bottom:32px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;transition:opacity .25s,visibility .25s}
 .pila .cartel{position:static}
 .mapa.cerca .cartel,.mapa.cerca .pila{opacity:0;visibility:hidden}
-.escala{position:absolute;top:14px;right:14px;background:rgba(251,246,236,.94);border:1px solid var(--linea);border-radius:6px;
+.escala{position:absolute;top:14px;right:14px;background:rgba(255,253,248,.94);border:1px solid var(--linea);border-radius:6px;
         padding:6px 12px 8px;pointer-events:none;font:11px "Noto Sans",sans-serif;color:var(--tinta-suave)}
 .escala .marcas{position:relative;height:15px}
 .escala .marcas span{position:absolute;transform:translateX(-50%);white-space:nowrap}
@@ -162,7 +204,7 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
 .escala .marcas span:last-child{transform:translateX(-100%)}
 .escala .barra-escala{height:5px;border:1.2px solid var(--tinta);background:linear-gradient(90deg,var(--tinta) 50%,transparent 50%)}
 .atrib{position:absolute;right:0;bottom:0;max-width:100%;font:11px "Noto Sans",sans-serif;color:var(--tinta-suave);
-       background:rgba(243,235,221,.9);padding:3px 8px;border-top-left-radius:4px}
+       background:rgba(230,228,221,.9);padding:3px 8px;border-top-left-radius:4px}
 .atrib a{color:inherit}
 @media (max-width:600px){
   .cartel{padding:4px 7px;gap:6px;border-radius:5px}
@@ -175,18 +217,21 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
   .atrib{font-size:9.5px}
 }
 .maplibregl-ctrl-group{background:var(--papel-claro);border:1px solid var(--linea);box-shadow:none}
-.maplibregl-popup-content{background:var(--papel-claro);color:var(--tinta);font:14px var(--texto);padding:10px 14px;
-      border:1px solid var(--linea);border-radius:10px;box-shadow:0 4px 14px rgba(59,47,37,.15)}
-.maplibregl-popup-content b{display:block;font-weight:600}
-.maplibregl-popup-content small{display:block;color:var(--tinta-suave);font-size:12.5px}
-.maplibregl-popup-content button{margin-top:6px;background:var(--terra);color:var(--papel-claro);border:0;border-radius:999px;
-      padding:5px 12px;font:600 12.5px var(--texto);cursor:pointer}
+.mapa .maplibregl-popup-content{background:var(--papel-claro);color:var(--tinta);font:16px/1.45 var(--texto);padding:10px 34px 12px 14px;
+      border:1px solid var(--linea);border-radius:10px;box-shadow:0 4px 14px rgba(46,43,39,.15)}
+.mapa .maplibregl-popup-content b{display:block;font-weight:400;font-size:18px}
+.mapa .maplibregl-popup-content small{display:block;color:var(--tinta-suave);font-size:14px}
+.mapa .maplibregl-popup-content button:not(.maplibregl-popup-close-button){margin-top:6px;background:var(--terra);color:var(--papel-claro);border:0;border-radius:999px;
+      padding:5px 12px;font:400 14px var(--texto);cursor:pointer}
+/* La X de cerrar va en su esquina, sin pisar el título */
+.mapa .maplibregl-popup-close-button{top:4px;right:4px;width:26px;height:26px;border-radius:50%;font:20px/1 system-ui,sans-serif;color:var(--tinta-suave);background:none}
+.mapa .maplibregl-popup-close-button:hover{background:var(--papel)}
 .maplibregl-popup-tip{border-top-color:var(--papel-claro)!important;border-bottom-color:var(--papel-claro)!important}
 
 /* ---------- Dónde dormir ---------- */
 .seccion-alojamiento{padding-top:56px}
-.alojamiento .nota{text-align:center;color:var(--tinta-suave);font-size:13px;margin:-30px auto 30px;max-width:620px}
-details{--acento:var(--tinta);--suave:#E8DFCF;margin-top:30px}
+.alojamiento .nota{text-align:center;color:var(--tinta-suave);font-size:16px;margin:-30px auto 30px;max-width:620px}
+details{--acento:var(--tinta);--suave:#E6E4DD;margin-top:30px}
 details.terra{--acento:var(--terra);--suave:var(--terra-suave)}
 details.oliva{--acento:var(--oliva);--suave:var(--oliva-suave)}
 details.pizarra{--acento:var(--pizarra);--suave:var(--pizarra-suave)}
@@ -195,9 +240,9 @@ summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;
 summary::-webkit-details-marker{display:none}
 summary::before{content:"";flex:none;width:12px;height:12px;border-radius:50%;background:var(--acento);box-shadow:0 0 0 4px var(--suave)}
 summary:focus-visible{outline:2px solid var(--acento);outline-offset:4px;border-radius:4px}
-summary h3{font-family:var(--titulos);font-style:italic;font-weight:500;font-size:clamp(25px,4.5vw,34px);margin:0;
+summary h3{font-family:var(--titulos);font-weight:400;font-size:clamp(24px,3.95vw,54px);margin:0;
            color:var(--acento);line-height:1.15;flex:1}
-.cuantos{flex:none;font-size:13px;color:var(--tinta-suave);white-space:nowrap}
+.cuantos{flex:none;font-size:15px;color:var(--tinta-suave);white-space:nowrap}
 .flecha{flex:none;width:30px;height:30px;border-radius:50%;background:var(--suave);display:grid;place-items:center;transition:transform .25s}
 .flecha svg{width:14px;height:14px;stroke:var(--acento);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
 details[open] .flecha{transform:rotate(180deg)}
@@ -211,13 +256,13 @@ details[open] .rejilla{animation:abrir .25s ease}
        padding:18px 22px 18px;display:flex;flex-direction:column;scroll-margin-top:calc(var(--barra) + 20px);transition:box-shadow .4s}
 .ficha.resaltada{box-shadow:0 0 0 3px var(--acento)}
 .ficha .cabeza{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.ficha h4{font-size:19px;font-weight:600;margin:0;line-height:1.3}
-.precio{background:var(--suave);color:var(--acento);font-weight:600;font-size:14px;letter-spacing:.5px;padding:3px 10px;border-radius:999px;white-space:nowrap}
-.ficha .meta{color:var(--tinta-suave);font-size:14px;margin:6px 0 4px}
-.ficha .dato{font-size:14px;margin:0 0 4px;display:flex;align-items:center;gap:7px}
+.ficha h4{font-size:23px;font-weight:400;margin:0;line-height:1.3;color:var(--acento)}
+.precio{background:var(--suave);color:var(--acento);font-weight:400;font-size:15px;letter-spacing:.5px;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.ficha .meta{color:var(--tinta-suave);font-size:17px;margin:6px 0 4px}
+.ficha .dato{font-size:17px;margin:0 0 4px;display:flex;align-items:center;gap:7px}
 .ficha .dato::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acento);flex:none}
 .ficha .botones{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto;padding-top:12px}
-.ficha .botones a{font-size:13px;font-weight:600;text-decoration:none;padding:6px 14px;border-radius:999px;border:1.5px solid var(--acento)}
+.ficha .botones a{font-size:15px;font-weight:400;text-decoration:none;padding:6px 14px;border-radius:999px;border:1.5px solid var(--acento)}
 .ficha .botones a.lleno{background:var(--acento);color:var(--papel-claro)}
 .ficha .botones a.vacio{color:var(--acento)}
 .ficha .botones .ir-mapa{--acento:inherit;color:var(--acento);margin-left:4px}
@@ -234,6 +279,6 @@ details[open] .rejilla{animation:abrir .25s ease}
 
 /* ---------- Pie ---------- */
 footer{background:var(--crema);text-align:center;padding:80px 20px 40px}
-footer .nombres{font-size:clamp(54px,10vw,84px)}
+footer .nombres{font-size:clamp(46px,6.6vw,90px)}
 footer .pendiente{max-width:560px;margin:16px auto 0}
-footer small{display:block;margin-top:40px;color:var(--tinta-suave);font-size:12px}
+footer small{display:block;margin-top:40px;color:var(--tinta-suave);font-size:14px}

@@ -5,8 +5,8 @@
    - El globo de un hotel tiene "Ver ficha", que lleva a su tarjeta.
    ========================================================== */
 (function(){
-  const C = { bg:'#F3EBDD', light:'#FBF6EC', line:'#CDBFA5', ink:'#3B2F25', ink2:'#6B5A48',
-              water:'#B8C2BC', terra:'#8E4A2D', olive:'#55603F', slate:'#4C6670', bldg:'#EAE0CE' };
+  const C = { bg:'#E6E4DD', light:'#FFFDF8', line:'#CFCBC0', ink:'#2E2B27', ink2:'#67635B',
+              water:'#B7C7CD', terra:'#AF4510', olive:'#467A43', slate:'#023F5D', bldg:'#DAD7CE' };
   const COLOR_GRUPO = { terra: C.terra, oliva: C.olive, pizarra: C.slate };
   const BOUNDS = [[-1.6990, 42.7805], [-1.6140, 42.8400]];
   const LOGRONO_LAT = 42.7951;      // altura por la que sale la A-12

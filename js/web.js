@@ -61,7 +61,8 @@
   lista.addEventListener('click', e => { if (e.target.closest('a')) cerrar(); });
   document.addEventListener('click', e => { if (!e.target.closest('.barra')) cerrar(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrar(); });
-  const fondo = () => barra.classList.toggle('con-fondo', window.scrollY > 40);
+  // En cuanto se mueve la página la barra lleva fondo, para que el monograma no pise los títulos que pasan por debajo
+  const fondo = () => barra.classList.toggle('con-fondo', window.scrollY > 2);
   window.addEventListener('scroll', fondo, { passive:true }); fondo();
 
   // Marca en el menú la sección que se está viendo

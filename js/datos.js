@@ -18,6 +18,7 @@ const LUGARES = {
 
 // Bloques de alojamiento. Precio: nivel orientativo (€ a €€€€€).
 // d = distancia a la Ciudadela; t = villavesa (opcional); u = web; q = búsqueda en Google Maps.
+// Enlaces de Booking: con las fechas de la boda ya puestas (viernes 25 a domingo 27 de junio de 2027, 2 adultos).
 const ALOJAMIENTOS = [
   { id: 'centro', titulo: 'En el centro, cerca de la ceremonia', color: 'terra', hoteles: [
     { id: 'perla', mapa: 'La Perla', n: 'Gran Hotel La Perla', p: '€€€€€', m: '5★ · Plaza del Castillo, 1', d: 'A 1,1 km de la Ciudadela · 14 min a pie', u: 'https://www.granhotellaperla.com/', q: 'Gran Hotel La Perla, Plaza del Castillo 1, Pamplona', c: [-1.64261, 42.81769] },
@@ -36,7 +37,7 @@ const ALOJAMIENTOS = [
     { id: 'holiday', mapa: 'Holiday Inn Express', n: 'Holiday Inn Express Pamplona', p: '€€', m: '3★ · Galaria, Mutilva Baja · desayuno incluido', d: 'A 5,2 km de la Ciudadela · 10 min en coche', t: '34 min en villavesa (L11)', u: 'https://www.ihg.com/holidayinnexpress/hotels/es/es/pamplona/pnasp/hoteldetail', q: 'Holiday Inn Express Pamplona, Galaria', c: [-1.62796, 42.78327] },
   ]},
   { id: 'coche', titulo: 'Un poco más lejos', color: 'pizarra', hoteles: [
-    { id: 'iraipe', mapa: 'Hostal Iraipe', n: 'Iraipe Pamplona Hostal', p: '€', m: '3★ · Hostal · Calle Berrioplano, 2 · Ansoáin', d: 'A 2,8 km de la Ciudadela · 6 min en coche', t: '22 min en villavesa (L21)', u: 'https://www.booking.com/hotel/es/hostal-pamplona.html', q: 'Iraipe Pamplona Hostal, Calle Berrioplano 2, Pamplona', c: [-1.64700, 42.83093] },
+    { id: 'iraipe', mapa: 'Hostal Iraipe', n: 'Iraipe Pamplona Hostal', p: '€', m: '3★ · Hostal · Calle Berrioplano, 2 · Ansoáin', d: 'A 2,8 km de la Ciudadela · 6 min en coche', t: '22 min en villavesa (L21)', u: 'https://www.booking.com/hotel/es/hostal-pamplona.html?checkin=2027-06-25&checkout=2027-06-27&group_adults=2&no_rooms=1&group_children=0', q: 'Iraipe Pamplona Hostal, Calle Berrioplano 2, Pamplona', c: [-1.64700, 42.83093] },
     { id: 'burlada', mapa: 'Hotel Burlada', n: 'Hotel Burlada', p: '€', m: '2★ · Calle La Fuente, 2A · Burlada', d: 'A 4,4 km de la Ciudadela · 7 min en coche', t: '20 min en villavesa (L4)', u: 'https://www.hotelburlada.es', q: 'Hotel Burlada, Calle La Fuente 2, Burlada', c: [-1.61716, 42.82566] },
     { id: 'sanfermin', mapa: 'AH San Fermín', n: 'Aparthotel AH San Fermín', p: '€€€', m: '4★ · Avenida de Villava, 90 · Burlada', d: 'A 4,8 km de la Ciudadela · 7 min en coche', t: '27 min en villavesa (L4)', u: 'https://www.hotelsfpamplona.com', q: 'AH San Fermín Pamplona, Avenida de Villava 90, Burlada', c: [-1.61967, 42.83092] },
     { id: 'jacinto', mapa: 'Casa Jacinto', n: 'Hotel Casa Jacinto', p: '€€', m: '2★ · Polígono Mugazuri, 11C · Burlada', d: 'A 4,8 km de la Ciudadela · 7 min en coche', t: '26 min en villavesa (L7 + L4)', u: 'https://www.hcasajacinto.com', q: 'Hotel Casa Jacinto, Polígono Mugazuri 11C, Burlada', c: [-1.62142, 42.83065] },

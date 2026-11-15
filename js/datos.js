@@ -5,10 +5,10 @@
    Coordenadas: [longitud, latitud].
    ========================================================== */
 
-// q = lo que se busca en Google Maps con el botón del globo; sin q, se usan las coordenadas exactas.
+// Botón «Abrir en Google Maps» del globo: maps = enlace directo a la ficha; si no hay, q = lo que se busca; si tampoco, las coordenadas exactas.
 const LUGARES = {
   // Coordenadas de la Sala Lidia Biurrun (ficha de Google Maps), dentro de la Ciudadela
-  ceremonia: { nombre: 'Ceremonia · Ciudadela', detalle: '18:30 · Sala Lidia Biurrun', c: [-1.6499994, 42.8111432], q: 'Sala Lidia Biurrun (Sala Enlaces Civiles), Pamplona' },
+  ceremonia: { nombre: 'Ceremonia · Ciudadela', detalle: '18:30 · Sala Lidia Biurrun', c: [-1.6499994, 42.8111432], maps: 'https://maps.google.com/?cid=5790998974073306792' },
   banquete:  { nombre: 'Banquete · Asador Erreleku', detalle: '20:00 · cóctel, cena y fiesta', c: [-1.64569, 42.78839], q: 'Asador Erreleku, Cordovilla' },
   // Donde nos dimos el primer beso (en el mapa sale con un corazón gris, sin más explicación)
   // Puntos especiales (especial: true): en el mapa salen con un corazón gris
@@ -54,7 +54,8 @@ const REFERENCIAS = [
   { n: 'Monumento al Encierro', c: [-1.64134, 42.81477], q: 'Monumento al Encierro, Avenida de Roncesvalles, Pamplona' },
   // d = texto corto que sale en el globo, bajo el nombre
   { n: 'Corrales de Santo Domingo', d: 'Donde empieza el encierro', c: [-1.64604, 42.82027], q: 'Corrales de Santo Domingo, Pamplona' },
-  { n: 'Rincón del Caballo Blanco', c: [-1.6413152, 42.8210107], q: 'Rincón del Caballo Blanco, Pamplona' },
+  // maps = enlace directo a su ficha de Google Maps (buscando por nombre salía también el Mesón del Caballo Blanco)
+  { n: 'Rincón del Caballo Blanco', c: [-1.6413152, 42.8210107], maps: 'https://maps.google.com/?cid=13520882529087779968' },
   { n: 'Fuente de la Navarrería', d: 'Zona para tomar algo', c: [-1.64291, 42.81932], q: 'Plaza de la Navarrería, Pamplona' },
   { n: 'Estación de autobuses', c: [-1.64592, 42.81131], q: 'Estación de Autobuses de Pamplona' },
   { n: 'Estación de tren', c: [-1.66132, 42.82502], q: 'Estación de tren de Pamplona' },

@@ -149,9 +149,9 @@
   function nombresHotel(){ if (map.getLayer('hotel-labels')) map.setLayerZoomRange('hotel-labels', estrecho() ? 12.6 : 0, 24); }
   function refrescar(){ escala(); cartelLogrono(); carteles(); }
 
-  // Enlace de Google Maps: por nombre si hay q (sale la ficha del sitio); si no, a las coordenadas exactas
-  const enlaceMaps = p => 'https://www.google.com/maps/search/?api=1&query=' +
-    encodeURIComponent(p.q || (p.c[1] + ',' + p.c[0]));
+  // Enlace de Google Maps: directo a la ficha si hay maps; si no, por nombre (q); si no, a las coordenadas exactas
+  const enlaceMaps = p => p.maps || ('https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent(p.q || (p.c[1] + ',' + p.c[0])));
 
   function globo(id){
     const lugar = LUGARES[id], hotel = HOTEL[id], ref = REF[id];

@@ -7,7 +7,8 @@
 
 // q = lo que se busca en Google Maps con el botón del globo; sin q, se usan las coordenadas exactas.
 const LUGARES = {
-  ceremonia: { nombre: 'Ceremonia · Ciudadela', detalle: '18:30', c: [-1.64932, 42.81213], q: 'Ciudadela de Pamplona' },
+  // Coordenadas de la Sala Lidia Biurrun (ficha de Google Maps), dentro de la Ciudadela
+  ceremonia: { nombre: 'Ceremonia · Ciudadela', detalle: '18:30 · Sala Lidia Biurrun', c: [-1.6499994, 42.8111432], q: 'Sala Lidia Biurrun (Sala Enlaces Civiles), Pamplona' },
   banquete:  { nombre: 'Banquete · Asador Erreleku', detalle: '20:00 · cóctel, cena y fiesta', c: [-1.64569, 42.78839], q: 'Asador Erreleku, Cordovilla' },
   // Donde nos dimos el primer beso (en el mapa sale con un corazón gris, sin más explicación)
   // Puntos especiales (especial: true): en el mapa salen con un corazón gris

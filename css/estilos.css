@@ -36,7 +36,7 @@
 .ac-real{position:absolute;left:0;top:0;color:transparent;overflow:hidden;width:100%;height:100%;user-select:text}
 .ac::after{content:"";position:absolute;pointer-events:none;background:currentColor}
 /* tilde aguda: trazo inclinado */
-.ac[data-m="agudo"]::after{width:var(--g);height:var(--largo);border-radius:var(--g);left:calc(50% - var(--ls,0em) / 2 + var(--dx));
+.ac[data-m="agudo"]::after{width:max(var(--g),1.3px);height:var(--largo);border-radius:var(--g);left:calc(50% - var(--ls,0em) / 2 + var(--dx));
   top:calc(var(--A) - var(--sube) - var(--largo) - .03em);transform:translateX(-50%) rotate(var(--giro));transform-origin:50% 100%}
 /* en la «í» se recorta el punto de la «i» */
 .ac.sin-punto::before{clip-path:inset(calc(var(--A) - var(--x) + .02em) -1em -1em -1em)}
@@ -71,7 +71,22 @@ a{color:var(--terra)}
                  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 /* 32px: la tinta de Brittany (1,65em) cabe entera en la barra de 58px */
 .monograma{font-family:var(--manuscrita);font-size:32px;line-height:1;color:var(--tinta);text-decoration:none;padding:4px 0 0}
+.barra nav{display:flex;align-items:center;gap:10px}
 .enlaces{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+/* Botón para volver a la web de Canva: contorno rojo, para que no se confunda con las secciones */
+.volver{order:2;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1.5px solid var(--terra);border-radius:999px;
+        font-family:var(--fina);font-size:15px;letter-spacing:2px;text-transform:uppercase;line-height:1.2;color:var(--terra);
+        text-decoration:none;white-space:nowrap;transition:background .2s,color .2s}
+.volver:hover,.volver:focus-visible{background:var(--terra);color:var(--papel-claro)}
+.volver svg,.boton-volver svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.volver .corto{display:none}
+@media (max-width:1000px){.volver .largo{display:none}.volver .corto{display:inline}}
+/* En móvil, solo la flecha: así «Inés y Josu» cabe en una línea dentro de la barra */
+@media (max-width:480px){.volver{padding:0;width:38px;height:38px;justify-content:center}.volver .corto{display:none}.volver svg{width:18px;height:18px}}
+.monograma{white-space:nowrap}
+.boton-volver{display:inline-flex;align-items:center;gap:8px;margin-top:28px;padding:10px 22px;border-radius:999px;background:var(--terra);
+        color:var(--papel-claro);font-family:var(--fina);font-size:17px;text-decoration:none}
+.boton-volver:hover{background:#963A0D}
 .enlaces a{display:block;padding:8px 12px;border-radius:999px;font-family:var(--fina);font-size:15px;letter-spacing:2px;
            text-transform:uppercase;text-decoration:none;color:var(--tinta-suave)}
 .enlaces a:hover{color:var(--tinta)}

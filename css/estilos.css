@@ -190,7 +190,7 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
 /* ---------- Mapa ---------- */
 .seccion-mapa{padding-bottom:40px}
 .leyenda{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:-20px 0 24px;font-size:16px;color:var(--tinta-suave)}
-.leyenda span{display:inline-flex;align-items:center;gap:8px}
+.leyenda > span{display:inline-flex;align-items:center;gap:8px}
 .leyenda i{width:11px;height:11px;border-radius:50%;border:2px solid var(--papel-claro);box-shadow:0 0 0 1px var(--linea)}
 .leyenda i.grande{width:15px;height:15px}
 .mapa{position:relative;width:100%;max-width:1100px;margin:0 auto;height:min(78vh,760px);min-height:440px;overflow:hidden;
@@ -298,3 +298,6 @@ footer{background:var(--crema);text-align:center;padding:80px 20px 40px}
 footer .nombres{font-size:clamp(46px,6.6vw,90px)}
 footer .pendiente{max-width:560px;margin:16px auto 0}
 footer small{display:block;margin-top:40px;color:var(--tinta-suave);font-size:14px}
+
+/* Blindaje de las tildes dibujadas (js/acentos.js): ninguna regla tipo «.algo span» debe partir la palabra en trozos */
+span.ac-palabra,span.ac{display:inline;gap:0;padding:0;margin:0}

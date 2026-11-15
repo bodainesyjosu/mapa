@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allison&family=Josefin+Sans:wght@300;400;600&family=Noto+Sans:wght@400;700&display=swap">
 <!-- ?v=N: súbelo cada vez que cambien estilos o scripts, para que los móviles no mezclen la página nueva con ficheros viejos de su caché -->
-<link rel="stylesheet" href="css/estilos.css?v=6">
+<link rel="stylesheet" href="css/estilos.css?v=7">
 <style>
   /* Solo en esta versión reducida */
   /* La página empieza directamente en «Dónde dormir», justo bajo la barra */
@@ -64,11 +64,11 @@
       <h2 class="aparece">El <em>mapa</em></h2>
       <p class="entradilla aparece">La ceremonia, el banquete y los alojamientos. Toca un punto para ver su ficha.</p>
       <div class="leyenda aparece" aria-label="Leyenda">
-        <span><i class="grande" style="background:var(--terra)"></i>Ceremonia</span>
-        <span><i class="grande" style="background:var(--oliva)"></i>Banquete</span>
-        <span><i style="background:var(--terra)"></i>Hoteles en el centro</span>
-        <span><i style="background:var(--oliva)"></i>Cerca del banquete</span>
-        <span><i style="background:var(--pizarra)"></i>Un poco más lejos</span>
+        <span><i class="grande" style="background:var(--terra)"></i><span>Ceremonia</span></span>
+        <span><i class="grande" style="background:var(--oliva)"></i><span>Banquete</span></span>
+        <span><i style="background:var(--terra)"></i><span>Hoteles en el centro</span></span>
+        <span><i style="background:var(--oliva)"></i><span>Cerca del banquete</span></span>
+        <span><i style="background:var(--pizarra)"></i><span>Un poco más lejos</span></span>
       </div>
       <div class="mapa" role="region" aria-label="Mapa de Pamplona con la ceremonia, el banquete y los hoteles">
         <div id="mapa-lienzo"></div>
@@ -98,9 +98,9 @@
 <!-- js/web.js es el de la web principal y espera la cuenta atrás: aquí va oculta -->
 <div id="cuenta" hidden><b data-u="d"></b><b data-u="h"></b><b data-u="m"></b><b data-u="s"></b></div>
 
-<script src="js/datos.js?v=6"></script>
-<script src="js/web.js?v=6"></script>
-<script src="js/mapa.js?v=6"></script>
-<script src="js/acentos.js?v=6"></script>
+<script src="js/datos.js?v=7"></script>
+<script src="js/web.js?v=7"></script>
+<script src="js/mapa.js?v=7"></script>
+<script src="js/acentos.js?v=7"></script>
 </body>
 </html>

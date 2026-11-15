@@ -11,7 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allison&family=Josefin+Sans:wght@300;400;600&family=Noto+Sans:wght@400;700&display=swap">
-<link rel="stylesheet" href="css/estilos.css">
+<!-- ?v=N: súbelo cada vez que cambien estilos o scripts, para que los móviles no mezclen la página nueva con ficheros viejos de su caché -->
+<link rel="stylesheet" href="css/estilos.css?v=3">
 <style>
   /* Solo en esta versión reducida */
   .cabecera{background:var(--crema);text-align:center;padding:calc(var(--barra) + 20px) 20px 48px}
@@ -29,7 +30,7 @@
   <nav aria-label="Secciones">
     <!-- Vuelta a la web principal (Canva). PROVISIONAL: cambiar por la dirección pública de la web cuando esté -->
     <a class="volver" href="https://canva.link/afzvbtj9rw4qike" aria-label="Volver a la web de la boda" title="Volver a la web de la boda">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span class="largo">Volver a la web</span><span class="corto">Volver</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="txt">Volver<span class="largo"> a la web</span></span>
     </a>
     <button class="boton-menu" type="button" aria-expanded="false" aria-controls="menu">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menú
@@ -94,16 +95,16 @@
   <p class="fecha aparece">26 · 06 · 2027 · Pamplona</p>
   <!-- PROVISIONAL: misma dirección que el botón de arriba -->
   <a class="boton-volver aparece" href="https://canva.link/afzvbtj9rw4qike">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Volver a la web de la boda
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>Volver a la web de la boda
   </a>
 </footer>
 
 <!-- js/web.js es el de la web principal y espera la cuenta atrás: aquí va oculta -->
 <div id="cuenta" hidden><b data-u="d"></b><b data-u="h"></b><b data-u="m"></b><b data-u="s"></b></div>
 
-<script src="js/datos.js"></script>
-<script src="js/web.js"></script>
-<script src="js/mapa.js"></script>
-<script src="js/acentos.js"></script>
+<script src="js/datos.js?v=3"></script>
+<script src="js/web.js?v=3"></script>
+<script src="js/mapa.js?v=3"></script>
+<script src="js/acentos.js?v=3"></script>
 </body>
 </html>

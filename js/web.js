@@ -9,7 +9,9 @@
   const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
 
   /* ---------- Dónde dormir: tarjetas desde datos.js ---------- */
-  const maps = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+  // Dentro de cada zona, del más económico (€) al más caro (€€€€€); a igual precio, el orden de datos.js
+  const porPrecio = hs => hs.slice().sort((a, b) => a.p.length - b.p.length);
+  const maps = q =>'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
   $('#bloques').innerHTML = ALOJAMIENTOS.map(g => `
     <details class="${g.color}" id="bloque-${g.id}">
       <summary>
@@ -17,7 +19,7 @@
         <span class="cuantos">${g.hoteles.length} alojamientos</span>
         <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
       </summary>
-      <div class="rejilla">${g.hoteles.map(h => `
+      <div class="rejilla">${porPrecio(g.hoteles).map(h => `
         <article class="ficha" id="ficha-${h.id}">
           <div class="cabeza"><h4>${esc(h.n)}</h4><span class="precio" title="Precio orientativo">${esc(h.p)}</span></div>
           <p class="meta">${esc(h.m)}</p>

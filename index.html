@@ -7,12 +7,13 @@
 <meta name="description" content="Mapa interactivo y alojamientos para la boda de Inés y Josu en Pamplona, 26 de junio de 2027.">
 <meta name="theme-color" content="#E6E4DD">
 <meta name="robots" content="noindex, nofollow">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FFFDF8' stroke='%23AF4510' stroke-width='3'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='%232E2B27' font-family='Georgia'%3EI%26amp;J%3C/text%3E%3C/svg%3E">
+<!-- Icono de la pestaña: chincheta de mapa en el rojo de la boda sobre el fondo claro -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23FFFDF8'/%3E%3Ccircle cx='32' cy='32' r='29.5' fill='none' stroke='%23E6E4DD' stroke-width='3'/%3E%3Cpath d='M32 55s-15-13.5-15-26a15 15 0 0 1 30 0c0 12.5-15 26-15 26z' fill='%23AF4510'/%3E%3Ccircle cx='32' cy='29' r='6' fill='%23FFFDF8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allison&family=Josefin+Sans:wght@300;400;600&family=Noto+Sans:wght@400;700&display=swap">
 <!-- ?v=N: súbelo cada vez que cambien estilos o scripts, para que los móviles no mezclen la página nueva con ficheros viejos de su caché -->
-<link rel="stylesheet" href="css/estilos.css?v=4">
+<link rel="stylesheet" href="css/estilos.css?v=5">
 <style>
   /* Solo en esta versión reducida */
   /* La página empieza directamente en «Dónde dormir», justo bajo la barra */
@@ -51,7 +52,7 @@
       <p class="etiqueta aparece">Alojamiento</p>
       <h2 class="aparece">Dónde <em>dormir</em></h2>
       <p class="entradilla aparece">Algunas opciones, ordenadas por zona. Las distancias y los tiempos son hasta la Ciudadela, donde será la ceremonia.</p>
-      <p class="nota aparece">Precio orientativo por noche, de € (más económico) a <span style="white-space:nowrap">€€€€€</span>. Tiempos en villavesa (autobús urbano) orientativos, en horario de día.</p>
+      <p class="nota aparece">Precio por noche: de € a <span style="white-space:nowrap">€€€€€</span>. La villavesa es el autobús urbano.</p>
       <div id="bloques" class="aparece"></div>
     </div>
   </section>
@@ -87,7 +88,6 @@
 </main>
 
 <footer>
-  <p class="nombres aparece">Inés y Josu</p>
   <p class="fecha aparece">26 · 06 · 2027 · Pamplona</p>
   <!-- PROVISIONAL: misma dirección que el botón de arriba -->
   <a class="boton-volver aparece" href="https://canva.link/afzvbtj9rw4qike">
@@ -98,9 +98,9 @@
 <!-- js/web.js es el de la web principal y espera la cuenta atrás: aquí va oculta -->
 <div id="cuenta" hidden><b data-u="d"></b><b data-u="h"></b><b data-u="m"></b><b data-u="s"></b></div>
 
-<script src="js/datos.js?v=4"></script>
-<script src="js/web.js?v=4"></script>
-<script src="js/mapa.js?v=4"></script>
-<script src="js/acentos.js?v=4"></script>
+<script src="js/datos.js?v=5"></script>
+<script src="js/web.js?v=5"></script>
+<script src="js/mapa.js?v=5"></script>
+<script src="js/acentos.js?v=5"></script>
 </body>
 </html>

@@ -193,7 +193,6 @@ p.pendiente{display:block;text-align:center;margin:0 auto}
 .leyenda > span{display:inline-flex;align-items:center;gap:8px}
 .leyenda i{width:11px;height:11px;border-radius:50%;border:2px solid var(--papel-claro);box-shadow:0 0 0 1px var(--linea)}
 .leyenda i.grande{width:15px;height:15px}
-.leyenda i.ref{width:10px;height:10px;background:var(--papel-claro);border:1.6px solid var(--tinta-suave);box-shadow:none}
 .mapa{position:relative;width:100%;max-width:1100px;margin:0 auto;height:min(78vh,760px);min-height:440px;overflow:hidden;
       border-radius:14px;border:1px solid var(--linea);background:var(--papel)}
 @media (max-width:600px){.mapa{height:min(150vw,82vh);border-radius:10px}}

@@ -10,7 +10,9 @@
   const COLOR_GRUPO = { terra: C.terra, oliva: C.olive, pizarra: C.slate };
   const BOUNDS = [[-1.6990, 42.7805], [-1.6140, 42.8400]];
   const LOGRONO_LAT = 42.7951;      // altura por la que sale la A-12
-  const REF_ZOOM = 13.3;            // a partir de este zoom se ven los lugares de referencia
+  const REF_ZOOM = 11.5;            // a partir de este zoom se ven los lugares de referencia (más bajo = se ven desde más lejos);
+                                    // en el centro, además, solo salen cuando hay sitio sin tapar los nombres de los hoteles
+  const REF_COLOR = '#4A4740';      // gris de los lugares de referencia (punto y nombre)
   const CARTELES_ZOOM_EXTRA = 0.8;  // al acercar más que esto sobre el encuadre inicial, se ocultan los carteles
 
   const caja = document.querySelector('.mapa');
@@ -51,10 +53,14 @@
       { id:'river-label', type:'symbol', source:'omt', 'source-layer':'waterway', filter:['all',['==',['get','class'],'river'],['in','Arga',['coalesce',['get','name'],'']]], layout:{ 'symbol-placement':'line', 'text-field':'Río Arga', 'text-font':F.i, 'text-size':zs(13,18), 'text-letter-spacing':0.25, 'symbol-spacing':350 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
       { id:'road-label', type:'symbol', source:'omt', 'source-layer':'transportation_name', minzoom:12, filter:['in',['get','class'],['literal',['motorway','trunk','primary']]], layout:{ 'symbol-placement':'line', 'text-field':['coalesce',['get','name:es'],['get','name'],['get','ref']], 'text-font':F.r, 'text-size':12, 'symbol-spacing':600 }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
       { id:'barrios', type:'symbol', source:'omt', 'source-layer':'place', filter:['in',['get','class'],['literal',['suburb','quarter','neighbourhood']]], layout:{ 'text-field':['upcase',['coalesce',['get','name:es'],['get','name']]], 'text-font':F.r, 'text-size':zs(10,14), 'text-letter-spacing':0.18, 'text-max-width':8, 'text-padding':12 }, paint:{ 'text-color':C.ink2, 'text-opacity':0.85, 'text-halo-color':C.bg, 'text-halo-width':1.5 } },
-      // Lugares de referencia: punto hueco y nombre en cursiva, discretos; solo al acercar el centro.
+      // Lugares de referencia: punto gris del mismo color que su nombre (en cursiva); solo al acercar el centro.
+      // Punto y nombre son un mismo símbolo: si el nombre no cabe, desaparecen los dos (nunca queda un punto sin nombre).
       // Van antes que los hoteles: si no caben, ceden su sitio a los nombres de hotel.
-      { id:'refs', type:'circle', source:'pts', minzoom:REF_ZOOM, filter:['==',['get','kind'],'ref'], paint:{ 'circle-radius':4, 'circle-color':C.light, 'circle-stroke-color':C.ink2, 'circle-stroke-width':1.6 } },
-      { id:'ref-labels', type:'symbol', source:'pts', minzoom:REF_ZOOM, filter:['==',['get','kind'],'ref'], layout:{ 'text-field':['get','name'], 'text-font':F.i, 'text-size':13.5, 'text-variable-anchor':['top','bottom','left','right'], 'text-radial-offset':0.7, 'text-justify':'auto', 'text-max-width':9 }, paint:{ 'text-color':'#4A4740', 'text-halo-color':C.bg, 'text-halo-width':2 } },
+      { id:'refs', type:'symbol', source:'pts', minzoom:REF_ZOOM, filter:['==',['get','kind'],'ref'],
+        layout:{ 'icon-image':'punto-ref', 'icon-optional':false, 'text-optional':false,
+                 'text-field':['get','name'], 'text-font':F.i, 'text-size':['interpolate',['linear'],['zoom'],REF_ZOOM,11,14.5,13.5], 'text-padding':0, 'icon-padding':0, 'text-variable-anchor':['top','bottom','left','right','top-left','top-right','bottom-left','bottom-right'],
+                 'text-radial-offset':0.8, 'text-justify':'auto', 'text-max-width':9 },
+        paint:{ 'text-color':REF_COLOR, 'text-halo-color':C.bg, 'text-halo-width':2 } },
       { id:'hotels', type:'circle', source:'pts', filter:['==',['get','kind'],'h'], paint:{ 'circle-radius':zs(4.5,5.5), 'circle-stroke-color':C.light, 'circle-stroke-width':2, 'circle-color':['match',['get','g'],'terra',C.terra,'oliva',C.olive,C.slate] } },
       { id:'areas', type:'symbol', source:'pts', filter:['==',['get','kind'],'area'], layout:{ 'text-field':['get','name'], 'text-font':F.b, 'text-size':zs(11,16), 'text-letter-spacing':0.2, 'text-allow-overlap':true }, paint:{ 'text-color':C.ink2, 'text-halo-color':C.bg, 'text-halo-width':2 } },
       { id:'main', type:'circle', source:'pts', filter:['in',['get','kind'],['literal',['cer','ban']]], paint:{ 'circle-radius':zs(9,13), 'circle-color':['match',['get','kind'],'cer',C.terra,C.olive], 'circle-stroke-color':C.light, 'circle-stroke-width':3 } },
@@ -141,6 +147,15 @@
       }
     });
     map.touchZoomRotate.disableRotation();
+    // Punto gris de los lugares de referencia (se dibuja aquí porque el estilo no trae imágenes)
+    map.on('styleimagemissing', e => {
+      if (e.id !== 'punto-ref' || map.hasImage('punto-ref')) return;
+      const px = 2, t = 13 * px, cv = document.createElement('canvas'); cv.width = cv.height = t;
+      const g = cv.getContext('2d');
+      g.beginPath(); g.arc(t / 2, t / 2, 6 * px, 0, Math.PI * 2); g.fillStyle = C.light; g.fill();
+      g.beginPath(); g.arc(t / 2, t / 2, 4.5 * px, 0, Math.PI * 2); g.fillStyle = REF_COLOR; g.fill();
+      map.addImage('punto-ref', g.getImageData(0, 0, t, t), { pixelRatio: px });
+    });
     map.addControl(new maplibregl.NavigationControl({ showCompass:false }), 'bottom-left');
     baseZoom = map.getZoom(); lastW = caja.clientWidth;
 
@@ -193,5 +208,5 @@
   // Por si el navegador no avisa de que se ha llegado a la sección: arranca igualmente al poco de cargar
   window.addEventListener('load', () => setTimeout(iniciar, 2500));
 
-  window.Mapa = { iniciar, ir };
+  window.Mapa = { iniciar, ir, get mapa(){ return map; } };
 })();

@@ -45,6 +45,7 @@ const REFERENCIAS = [
   { n: 'Catedral', c: [-1.64123, 42.81940] },
   { n: 'Plaza de toros', c: [-1.63900, 42.81591] },
   { n: 'Estación de autobuses', c: [-1.64592, 42.81131] },
+  { n: 'Estación de tren', c: [-1.66132, 42.82502] },
 ];
 
 // Rótulos de zona en el mapa

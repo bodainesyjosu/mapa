@@ -38,7 +38,9 @@
     if (!TODAS.test(txt)) return;
     const f = fuenteDe(padre);
     if (!f || !f.faltan.test(txt)) return;
-    const mayus = getComputedStyle(padre).textTransform === 'uppercase';
+    const estilo = getComputedStyle(padre);
+    const mayus = estilo.textTransform === 'uppercase';
+    const cursiva = estilo.fontStyle !== 'normal';   // las dos fuentes no tienen cursiva: el navegador la inclina
     const frag = document.createDocumentFragment();
     // Palabra a palabra: la que lleva letras dibujadas va en un bloque que no se parte
     for (const pal of txt.split(/(\s+)/)) {
@@ -55,6 +57,7 @@
         const alta = mayus || ch !== ch.toLowerCase();
         s.className = 'ac ' + f.clase + (alta ? ' alta' : '') + (m[0] === 'i' && !alta ? ' sin-punto' : '');
         s.dataset.b = m[0]; s.dataset.m = m[1];
+        if (cursiva) s.dataset.cursiva = '1';
         const real = document.createElement('span');
         real.className = 'ac-real'; real.textContent = ch;
         s.appendChild(real);
@@ -129,7 +132,10 @@
     const m = medir(NOMBRE[clase], ch, s.classList.contains('sin-punto'));
     if (!m) return;
     s.style.setProperty('--top', m.top.toFixed(3) + 'em');
-    if (m.cx !== null) s.style.setProperty('--cx', m.cx.toFixed(3) + 'em');
+    // En cursiva inventada por el navegador la letra se inclina hacia la derecha (~0,25 por cada em de altura):
+    // la tilde se desplaza lo mismo a la altura a la que va
+    const inclinada = s.dataset.cursiva ? (m.top + 0.12) * 0.25 : 0;
+    if (m.cx !== null) s.style.setProperty('--cx', (m.cx + inclinada).toFixed(3) + 'em');
   }
   // Línea base de cada fuente tal y como la pone este navegador
   function lineaBase(){

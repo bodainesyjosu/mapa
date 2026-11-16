@@ -1,5 +1,5 @@
 /* ==========================================================
-   Boda Inés y Josu · estilos
+   Boda Inés & Josu · estilos
    Paleta y tipografías de la web de Canva (canva.link/afzvbtj9rw4qike)
    ========================================================== */
 /* Fuentes propias: los ficheros van en /fuentes */
@@ -23,32 +23,34 @@
   --barra:58px;
 }
 /* ---------- Tildes dibujadas (ver js/acentos.js) ----------
-   --A/--D: ascendente y descendente de la fuente (en em), para saber dónde cae la línea base.
-   --x/--cap: altura de minúscula y de mayúscula. --g: grosor del trazo. --dx: corrección por la inclinación. */
+   Las medidas buenas las pone js/acentos.js midiendo en el propio navegador de quien visita la web:
+   · --A / --D (por fuente): dónde cae la línea base dentro del texto (cada navegador lo calcula distinto).
+   · --top / --cx (por letra): altura de la tinta de la letra sobre la línea base y centro de su parte de arriba,
+     para que la tilde se apoye justo encima aunque la letra sea inclinada (Brittany).
+   Los valores de aquí son solo el respaldo hasta que carguen las fuentes.
+   --g: grosor del trazo · --largo: largo de la tilde · --giro: inclinación · --hueco: aire entre letra y tilde. */
 .ac-palabra{white-space:nowrap}
-.ac{position:relative;--sube:var(--x)}
-/* --ls: espaciado entre letras del texto (se resta para centrar la tilde sobre la letra) */
-.ac.alta{--sube:var(--cap)}
-.f-brit{--A:1.17em;--D:.89em;--x:.36em;--cap:1.02em;--g:.034em;--dx:.07em;--largo:.2em;--giro:58deg}
-.f-yp{--A:1em;--D:.21em;--x:.43em;--cap:.645em;--g:.05em;--dx:0em;--largo:.16em;--giro:45deg}
+.ac{position:relative;--top:var(--x);--cx:50%}
+.ac.alta{--top:var(--cap)}
+.f-brit{--A:1.17em;--D:.89em;--x:.36em;--cap:1.02em;--g:.034em;--largo:.2em;--giro:58deg;--hueco:.05em}
+.f-yp{--A:1em;--D:.21em;--x:.43em;--cap:.645em;--g:.05em;--largo:.16em;--giro:45deg;--hueco:.04em}
 .f-yp.alta{--largo:.12em}
 .ac::before{content:attr(data-b);display:inline-block;line-height:calc(var(--A) + var(--D))}
 .ac-real{position:absolute;left:0;top:0;color:transparent;overflow:hidden;width:100%;height:100%;user-select:text}
 .ac::after{content:"";position:absolute;pointer-events:none;background:currentColor}
-/* tilde aguda: trazo inclinado */
-.ac[data-m="agudo"]::after{width:max(var(--g),1.3px);height:var(--largo);border-radius:var(--g);left:calc(50% - var(--ls,0em) / 2 + var(--dx));
-  top:calc(var(--A) - var(--sube) - var(--largo) - .03em);transform:translateX(-50%) rotate(var(--giro));transform-origin:50% 100%}
-/* en la «í» se recorta el punto de la «i» */
-.ac.sin-punto::before{clip-path:inset(calc(var(--A) - var(--x) + .02em) -1em -1em -1em)}
-.ac.sin-punto[data-m="agudo"]::after{top:calc(var(--A) - var(--x) - var(--largo) + .02em)}
+/* tilde aguda: trazo inclinado que arranca justo encima de la letra */
+.ac[data-m="agudo"]::after{width:max(var(--g),1.3px);height:var(--largo);border-radius:var(--g);left:var(--cx);
+  top:calc(var(--A) - var(--top) - var(--hueco) - var(--largo));transform:translateX(-50%) rotate(var(--giro));transform-origin:50% 100%}
+/* en la «í» se recorta el punto de la «i» (acentos.js pone en --top la altura del palo, sin el punto) */
+.ac.sin-punto::before{clip-path:inset(calc(var(--A) - var(--top) - .02em) -1em -1em -1em)}
 /* virgulilla de la ñ */
-.ac[data-m="virgulilla"]::after{width:.26em;height:.09em;left:calc(50% - var(--ls,0em) / 2 + var(--dx));transform:translateX(-50%);
-  top:calc(var(--A) - var(--sube) - .17em);
+.ac[data-m="virgulilla"]::after{width:.26em;height:.09em;left:var(--cx);transform:translateX(-50%);
+  top:calc(var(--A) - var(--top) - var(--hueco) - .09em);
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 9'%3E%3Cpath d='M2 7C4 2 8 1.5 12 4.5S20 7.5 24 2' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 9'%3E%3Cpath d='M2 7C4 2 8 1.5 12 4.5S20 7.5 24 2' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat}
 .f-brit[data-m="virgulilla"]::after{transform:translateX(-50%) rotate(-8deg)}
 /* diéresis */
-.ac[data-m="dieresis"]::after{width:.22em;height:.07em;left:calc(50% - var(--ls,0em) / 2 + var(--dx));transform:translateX(-50%);top:calc(var(--A) - var(--sube) - .15em);
+.ac[data-m="dieresis"]::after{width:.22em;height:.07em;left:var(--cx);transform:translateX(-50%);top:calc(var(--A) - var(--top) - var(--hueco) - .07em);
   background:radial-gradient(circle,currentColor 60%,transparent 64%) 0 0/.07em .07em repeat-x;background-color:transparent;
   -webkit-mask:linear-gradient(90deg,#000 32%,transparent 32% 68%,#000 68%);mask:linear-gradient(90deg,#000 32%,transparent 32% 68%,#000 68%)}
 /* ¿ y ¡: la ? y la ! de la propia fuente, giradas */
@@ -82,7 +84,7 @@ a{color:var(--terra)}
 .volver:focus-visible{background:var(--terra);color:var(--papel-claro)}
 .volver svg,.boton-volver svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
 @media (max-width:1000px){.volver .largo{display:none}}
-/* En móvil, solo la flecha: así «Inés y Josu» cabe en una línea dentro de la barra */
+/* En móvil, solo la flecha: así «Inés & Josu» cabe en una línea dentro de la barra */
 @media (max-width:480px){.volver{padding:0;width:38px;height:38px;justify-content:center}.volver .txt{display:none}.volver svg{width:18px;height:18px}}
 .monograma{white-space:nowrap}
 .boton-volver{display:inline-flex;align-items:center;gap:8px;margin-top:28px;padding:10px 22px;border-radius:999px;background:var(--terra);
